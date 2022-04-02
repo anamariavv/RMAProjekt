@@ -26,7 +26,6 @@ public final class SingletonRequestSender {
         this.context = context;
 
         queue = SingletonRequestQueue.getInstance(context).getRequestQueue();
-
     }
 
     public static SingletonRequestSender getInstance(Context context) {
@@ -40,7 +39,7 @@ public final class SingletonRequestSender {
         JSONObject jsonObject = new JSONObject();
 
         try {
-            jsonObject.put("name","ana banana");
+            jsonObject.put("name","testname");
         } catch (JSONException e) {
             e.printStackTrace();
         }
