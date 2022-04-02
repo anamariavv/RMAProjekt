@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">RMAProjekt</string>
+    <string name="text1">Display information here</string>
+    <string name="request_url">http://192.168.0.13:8081/RequestHandler.php</string>
+</resources>
