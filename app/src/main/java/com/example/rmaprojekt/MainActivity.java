@@ -8,21 +8,27 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity {
-    TextView textView;
 
    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        textView = findViewById(R.id.text1);
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("queue", "RANKED_SOLO_5x5");
+        JSONObject challengerList = new MyRequest("eune", "lv4_challenger", params).createJsonRequest();
 
         SingletonRequestSender.getInstance(this).sendRequest(new SingletonRequestSender.RequestResult() {
             @Override
             public String onSuccess(String result) {
                 Log.d("Done", "success");
-                textView.setText(result);
+                Log.d("repsonse", result);
                 return result;
             }
             @Override
@@ -30,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("Done", error.getMessage());
                 return error;
             }
-        });
+        }, challengerList);
 
 
     }

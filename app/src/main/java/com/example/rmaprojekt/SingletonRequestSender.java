@@ -17,13 +17,13 @@ public final class SingletonRequestSender {
     private static RequestQueue queue;
     private static Context context;
 
-    public interface RequestResult {
+    interface RequestResult {
         String onSuccess(String result);
         VolleyError onError(VolleyError error);
     }
 
     public SingletonRequestSender(Context context) {
-        this.context = context;
+        SingletonRequestSender.context = context;
 
         queue = SingletonRequestQueue.getInstance(context).getRequestQueue();
     }
@@ -35,17 +35,10 @@ public final class SingletonRequestSender {
         return instance;
     }
 
-    public static void sendRequest(RequestResult callback) {
-        JSONObject jsonObject = new JSONObject();
-
-        try {
-            jsonObject.put("name","testname");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+    public static void sendRequest(RequestResult callback, JSONObject object) {
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
-                context.getResources().getString(R.string.request_url),jsonObject,
+                context.getResources().getString(R.string.request_url),object,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
