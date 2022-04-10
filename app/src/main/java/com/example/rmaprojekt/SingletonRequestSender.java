@@ -18,7 +18,7 @@ public final class SingletonRequestSender {
     private static Context context;
 
     interface RequestResult {
-        String onSuccess(String result);
+        JSONObject onSuccess(JSONObject result);
         VolleyError onError(VolleyError error);
     }
 
@@ -35,21 +35,19 @@ public final class SingletonRequestSender {
         return instance;
     }
 
-    public static void sendRequest(RequestResult callback, JSONObject object) {
+    public static void sendRequest(JSONObject object,RequestResult callback) {
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
                 context.getResources().getString(R.string.request_url),object,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("SendRequest response", response.toString());
-                        callback.onSuccess(response.toString());
+                        callback.onSuccess(response);
                     }
                },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("SendRequest error", error.getMessage());
                         callback.onError(error);
                     }
                 });
