@@ -5,4 +5,7 @@
     <string name="header_summoner">Summoner Name</string>
     <string name="header_position">Position</string>
     <string name="header_points">LP</string>
+    <string name="login_title">Welcome to LeagueStat</string>
+    <string name="username_text">Enter username</string>
+    <string name="password_text">Enter Password</string>
 </resources>
