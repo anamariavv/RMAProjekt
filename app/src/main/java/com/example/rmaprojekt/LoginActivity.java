@@ -19,6 +19,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        SingletonRequestSender.getInstance(this);
+
         //create login fragment
         Fragment loginFragment = new LoginFragment();
 
@@ -26,7 +28,6 @@ public class LoginActivity extends AppCompatActivity {
         fragmentManager.beginTransaction().add(new RegisterFragment(), "registerFrag").commitNow();
         fragmentManager.beginTransaction().replace(R.id.fragmentFrame, loginFragment)
                 .setReorderingAllowed(true)
-                .addToBackStack(null)
                 .commit();
 
     }

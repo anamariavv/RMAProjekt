@@ -35,10 +35,10 @@ public final class SingletonRequestSender {
         return instance;
     }
 
-    public static void sendRequest(JSONObject object,RequestResult callback) {
+    public static void sendRequest(JSONObject object,String url,RequestResult callback) {
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
-                context.getResources().getString(R.string.request_url),object,
+                url,object,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {

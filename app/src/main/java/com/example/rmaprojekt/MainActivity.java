@@ -52,8 +52,6 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        SingletonRequestSender.getInstance(this);
-
 
         ScrollView scrollview = findViewById(R.id.home_scroll);
         LinearLayout scrollChild = new LinearLayout(this);
@@ -66,11 +64,11 @@ public class MainActivity extends AppCompatActivity {
 
         JSONObject challengerRequest = new MyRequest("eune", "lv4_challenger", params).createJsonRequest();
 
-        SingletonRequestSender.sendRequest(challengerRequest, new SingletonRequestSender.RequestResult() {
+        SingletonRequestSender.sendRequest(challengerRequest, getResources().getString(R.string.request_url)
+                ,new SingletonRequestSender.RequestResult() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public JSONObject onSuccess(JSONObject result) {
-
                 Log.d("Done", "success");
 
                 JSONArray entries;
@@ -134,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
 
             public VolleyError onError(VolleyError error) {
-
+                //TODO display error
                 Log.d("Done", error.getMessage());
                 return error;
             }

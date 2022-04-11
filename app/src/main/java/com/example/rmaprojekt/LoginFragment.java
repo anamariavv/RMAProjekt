@@ -22,11 +22,9 @@ import android.widget.TextView;
  */
 public class LoginFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
 
-    // TODO: Rename and change types of parameters
     private String name;
 
     public LoginFragment() {
@@ -40,7 +38,6 @@ public class LoginFragment extends Fragment {
      * @param param1 Parameter 1.
      * @return A new instance of fragment LoginFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static LoginFragment newInstance(String param1) {
         LoginFragment fragment = new LoginFragment();
         Bundle args = new Bundle();
@@ -78,6 +75,15 @@ public class LoginFragment extends Fragment {
                         .setReorderingAllowed(true)
                         .addToBackStack(null)
                         .commit();
+            }
+        });
+
+        Button loginButton = view.findViewById(R.id.loginButton);
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent mainActivity = new Intent(getContext(),MainActivity.class);
+                startActivity(mainActivity);
             }
         });
     }
