@@ -20,5 +20,6 @@
     <string name="register_confirm_password">Confirm Password</string>
     <string name="register_button">Register</string>
     <string name="database_request_url">http://192.168.0.13:8081/Authenticate.php</string>
+    <string name="register_error"></string>
 
 </resources>

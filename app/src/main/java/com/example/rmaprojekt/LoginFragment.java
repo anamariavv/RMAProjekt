@@ -13,7 +13,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+
+import java.util.HashMap;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -79,9 +82,15 @@ public class LoginFragment extends Fragment {
         });
 
         Button loginButton = view.findViewById(R.id.loginButton);
+        EditText usernameView = view.findViewById(R.id.loginUsername);
+        EditText passwordVIew = view.findViewById(R.id.loginPassword);
+
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                //TODO validate fields and send request
+
                 Intent mainActivity = new Intent(getContext(),MainActivity.class);
                 startActivity(mainActivity);
             }
