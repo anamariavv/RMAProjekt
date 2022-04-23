@@ -2,7 +2,6 @@ package com.example.rmaprojekt;
 
 import android.content.Intent;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -15,14 +14,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.VolleyError;
+
+import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Map;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link LoginFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class LoginFragment extends Fragment {
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -33,14 +33,6 @@ public class LoginFragment extends Fragment {
     public LoginFragment() {
         // Required empty public constructor
     }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @return A new instance of fragment LoginFragment.
-     */
     public static LoginFragment newInstance(String param1) {
         LoginFragment fragment = new LoginFragment();
         Bundle args = new Bundle();
@@ -88,11 +80,38 @@ public class LoginFragment extends Fragment {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String username = usernameView.getText().toString().trim();
+                String password = passwordVIew.getText().toString().trim();
 
-                //TODO validate fields and send request
+                if(username.isEmpty() || password.isEmpty()) {
+                    Toast toast = Toast.makeText(getContext(), "Please fill in all fields", Toast.LENGTH_SHORT);
+                    toast.show();
+                } else {
+                    Map<String, String> loginInfo = new HashMap<>();
+                    loginInfo.put("source", "login");
+                    loginInfo.put("username", username);
+                    loginInfo.put("password", password);
+                    JSONObject requestBody = new MyRequest(loginInfo).createJsonRequest();
 
-                Intent mainActivity = new Intent(getContext(),MainActivity.class);
-                startActivity(mainActivity);
+                    SingletonRequestSender.sendRequest(requestBody, getResources().getString(R.string.database_request_url), new SingletonRequestSender.RequestResult() {
+                        @Override
+                        public JSONObject onSuccess(JSONObject result) {
+                            Log.d("Login success", result.toString());
+                            //TODO check responses
+                            Intent mainActivity = new Intent(getContext(), MainActivity.class);
+                            startActivity(mainActivity);
+
+                            return null;
+                        }
+
+                        @Override
+                        public VolleyError onError(VolleyError error) {
+                            Log.d("Login error: ", error.toString());
+
+                            return null;
+                        }
+                    });
+                }
             }
         });
     }

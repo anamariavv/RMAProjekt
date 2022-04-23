@@ -20,11 +20,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link RegisterFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class RegisterFragment extends Fragment {
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -36,13 +31,6 @@ public class RegisterFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @return A new instance of fragment RegisterFragment.
-     */
     public static RegisterFragment newInstance(String param1) {
         RegisterFragment fragment = new RegisterFragment();
         Bundle args = new Bundle();
@@ -87,8 +75,8 @@ public class RegisterFragment extends Fragment {
             String passwordConfirmed = confirmPassView.getText().toString().trim();
 
             if(validate(name, lastname, username, email, password, passwordConfirmed)) {
-                //TODO hash password
                 Map<String, String> registerInfo = new HashMap<>();
+                registerInfo.put("source", "register");
                 registerInfo.put("name", name);
                 registerInfo.put("lastname", lastname);
                 registerInfo.put("username", username);
@@ -99,8 +87,8 @@ public class RegisterFragment extends Fragment {
                 SingletonRequestSender.sendRequest(requestBody, getResources().getString(R.string.database_request_url),new SingletonRequestSender.RequestResult() {
                     @Override
                     public JSONObject onSuccess(JSONObject result) {
-                        Log.d("Done", "Register success");
-
+                        Log.d("Done", result.toString());
+                        //TODO check responses
                         Intent mainActivity = new Intent(getContext(), MainActivity.class);
                         startActivity(mainActivity);
 
@@ -109,7 +97,7 @@ public class RegisterFragment extends Fragment {
                     @Override
                     public VolleyError onError(VolleyError error) {
                         //TODO display error
-                        Log.d("Done", "Register failure");
+                        Log.d("Done", "Register failure "+ error.getMessage());
 
                         return error;
                     }
