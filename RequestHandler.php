@@ -16,7 +16,7 @@
     if(strcmp($api, "lv4_challenger") == 0) {
         $url .= ($regionsRV[$server] . ".api.riotgames.com/lol/league/v4/challengerleagues/by-queue/" . $data['queue']);
         fwrite($logfile,"Request url: " .  $url . "\n");
-    } else if(strcmp($api, "sv4_name")) {
+    } else if(strcmp($api, "sv4_name") == 0) {
         $url .= ($regionsRV[$server] . ".api.riotgames.com/lol/summoner/v4/summoners/by-name/" . $data['name']);
     }
 
