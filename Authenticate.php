@@ -6,7 +6,7 @@
 
     function respond($response) {
         echo json_encode(array("response"=>$response));
-        exit();
+        //exit($message);
     }
 
     if(strcmp($data["source"], "register") == 0) {
@@ -47,9 +47,9 @@
         $response = database_insert("user", array("name", "lastname", "email", "password", "username"),
                     "sssss", array( $name, $lastname, $email, $hashed_password, $username));
 
-        respond($response);
-
+    
         fclose($logfile);
+        respond("200");
 
     } else if(strcmp($data["source"], "login") == 0) {
         $password = mysqli_real_escape_string($connection, $data["password"]);
@@ -67,6 +67,7 @@
         } 
                     
         fclose($logfile);
+        respond("200");
 
     } else {
         respond($response);
