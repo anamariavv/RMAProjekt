@@ -2,7 +2,6 @@ package com.example.rmaprojekt;
 
 import android.content.Intent;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -22,7 +21,6 @@ import java.util.regex.Pattern;
 
 public class RegisterFragment extends Fragment {
 
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
 
     private String mParam1;
@@ -82,24 +80,21 @@ public class RegisterFragment extends Fragment {
                 registerInfo.put("username", username);
                 registerInfo.put("email", email);
                 registerInfo.put("password", password);
-                JSONObject requestBody = new MyRequest(registerInfo).createJsonRequest();
+                JSONObject requestBody = SingletonRequestSender.createJsonRequest(registerInfo);
 
                 SingletonRequestSender.sendRequest(requestBody, getResources().getString(R.string.database_request_url),new SingletonRequestSender.RequestResult() {
                     @Override
-                    public JSONObject onSuccess(JSONObject result) {
+                    public void onSuccess(JSONObject result) {
                         Log.d("Done", result.toString());
                         //TODO check responses
                         Intent mainActivity = new Intent(getContext(), MainActivity.class);
                         startActivity(mainActivity);
-
-                        return result;
                     }
+
                     @Override
-                    public VolleyError onError(VolleyError error) {
+                    public void onError(VolleyError error) {
                         //TODO display error
                         Log.d("Done", "Register failure "+ error.getMessage());
-
-                        return error;
                     }
                 });
             }

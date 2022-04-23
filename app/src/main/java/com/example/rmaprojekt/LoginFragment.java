@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,17 +14,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.VolleyError;
-
 import org.json.JSONObject;
-
 import java.util.HashMap;
 import java.util.Map;
 
 public class LoginFragment extends Fragment {
 
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
 
     private String name;
@@ -91,24 +86,20 @@ public class LoginFragment extends Fragment {
                     loginInfo.put("source", "login");
                     loginInfo.put("username", username);
                     loginInfo.put("password", password);
-                    JSONObject requestBody = new MyRequest(loginInfo).createJsonRequest();
+                    JSONObject requestBody = SingletonRequestSender.createJsonRequest(loginInfo);
 
                     SingletonRequestSender.sendRequest(requestBody, getResources().getString(R.string.database_request_url), new SingletonRequestSender.RequestResult() {
                         @Override
-                        public JSONObject onSuccess(JSONObject result) {
+                        public void onSuccess(JSONObject result) {
                             Log.d("Login success", result.toString());
                             //TODO check responses
                             Intent mainActivity = new Intent(getContext(), MainActivity.class);
                             startActivity(mainActivity);
-
-                            return null;
                         }
 
                         @Override
-                        public VolleyError onError(VolleyError error) {
+                        public void onError(VolleyError error) {
                             Log.d("Login error: ", error.toString());
-
-                            return null;
                         }
                     });
                 }

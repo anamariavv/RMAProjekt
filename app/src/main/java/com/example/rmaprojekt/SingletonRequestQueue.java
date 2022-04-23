@@ -3,7 +3,6 @@ package com.example.rmaprojekt;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.LruCache;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
@@ -13,7 +12,7 @@ public class SingletonRequestQueue {
     private static SingletonRequestQueue instance;
     private final ImageLoader imageLoader;
     private RequestQueue requestQueue;
-    private static Context ctx;
+    private Context ctx;
 
     private SingletonRequestQueue(Context context) {
         ctx = context;
@@ -21,7 +20,7 @@ public class SingletonRequestQueue {
 
         imageLoader = new ImageLoader(requestQueue, new ImageLoader.ImageCache() {
                 private final LruCache<String, Bitmap>
-                        cache = new LruCache<String, Bitmap>(20);
+                        cache = new LruCache<>(20);
 
                 @Override
                 public Bitmap getBitmap(String url) {

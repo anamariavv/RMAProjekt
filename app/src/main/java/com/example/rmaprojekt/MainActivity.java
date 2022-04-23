@@ -28,7 +28,7 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    public class summonerComparator implements Comparator<JSONObject> {
+    public static class summonerComparator implements Comparator<JSONObject> {
 
        @Override
         public int compare(JSONObject summoner1, JSONObject summoner2) {
@@ -60,15 +60,17 @@ public class MainActivity extends AppCompatActivity {
         scrollChild.setOrientation(LinearLayout.VERTICAL);
 
         Map<String, String> params = new HashMap<>();
-        params.put("queue", "RANKED_SOLO_5x5");
+        params.put("queue", getResources().getString(R.string.queue_type_1));
+        params.put("server", getResources().getString(R.string.server_1));
+        params.put("api", getResources().getString(R.string.api_1));
 
-        JSONObject challengerRequest = new MyRequest("eune", "lv4_challenger", params).createJsonRequest();
+        JSONObject challengerRequest = SingletonRequestSender.createJsonRequest(params);
 
         SingletonRequestSender.sendRequest(challengerRequest, getResources().getString(R.string.request_url)
                 ,new SingletonRequestSender.RequestResult() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
-            public JSONObject onSuccess(JSONObject result) {
+            public void onSuccess(JSONObject result) {
                 Log.d("Done", "success");
 
                 JSONArray entries;
@@ -127,17 +129,13 @@ public class MainActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                return result;
             }
             @Override
-
-            public VolleyError onError(VolleyError error) {
+            public void onError(VolleyError error) {
                 //TODO display error
                 Log.d("Done", error.getMessage());
-                return error;
             }
         });
-
         scrollview.addView(scrollChild);
     }
 }
