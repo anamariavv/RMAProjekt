@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".HomepageFragment">
+
+    <RelativeLayout
+        android:id="@+id/list_header"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/summonerPosition"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:text="@string/header_position"
+            android:textSize="20dp"
+            android:textAlignment="viewStart"></TextView>
+
+        <TextView
+            android:id="@+id/summonerName"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toStartOf="@id/summonerPoints"
+            android:layout_toEndOf="@id/summonerPosition"
+            android:text="@string/header_summoner"
+            android:textSize="20dp"
+            android:textAlignment="center"></TextView>
+
+        <TextView
+            android:id="@+id/summonerPoints"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:text="@string/header_points"
+            android:textSize="20dp"
+            android:textAlignment="center"></TextView>
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/home_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.8"
+        android:layout_below="@id/list_header"
+        android:layout_alignParentBottom="true"
+        tools:ignore="SpeakableTextPresentCheck"></ScrollView>
+
+</LinearLayout>
