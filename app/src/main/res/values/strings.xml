@@ -36,5 +36,7 @@
     <string name="server_11">kr</string>
     <string name="api_1">lv4_challenger</string>
     <string name="api_2">sv4_name</string>
-
+    <string name="navigation_drawer_title"></string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>

@@ -105,7 +105,6 @@ public class RegisterFragment extends Fragment {
         Pattern passwordPattern = Pattern.compile("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$");
         Toast toast;
 
-        //TODO check for taken email and username
         if(name.isEmpty() || lastname.isEmpty() || username.isEmpty() || email.isEmpty() || password.isEmpty()) {
             toast = Toast.makeText(getContext(), "Please fill in all fields", Toast.LENGTH_SHORT);
             toast.show();
