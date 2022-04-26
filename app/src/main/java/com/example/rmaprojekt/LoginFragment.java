@@ -94,6 +94,7 @@ public class LoginFragment extends Fragment {
                             Log.d("Login success", result.toString());
                             //TODO check responses
                             Intent mainActivity = new Intent(getContext(), MainActivity.class);
+                            //TODO write information about user in shared preferences
                             startActivity(mainActivity);
                         }
 

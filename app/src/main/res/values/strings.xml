@@ -40,4 +40,11 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="profile_fragment_title">My Profile</string>
+    <string name="profile_name">Name</string>
+    <string name="profile_username">Username</string>
+    <string name="profile_lastname">Lastname</string>
+    <string name="profile_email">email</string>
+    <string name="profile_edit_info_button_text">Edit information</string>
+    <string name="profile_change_password_button_text">Change password</string>
 </resources>
