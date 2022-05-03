@@ -1,11 +1,14 @@
 package com.example.rmaprojekt;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,7 +55,6 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_profile, container, false);
-        //TODO display information from database
     }
 
     @Override
@@ -63,6 +65,9 @@ public class ProfileFragment extends Fragment {
         TextView nameView = view.findViewById(R.id.profile_name);
         TextView lastnameView = view.findViewById(R.id.profile_lastname);
         TextView emailView = view.findViewById(R.id.profile_email);
+
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("RMA", Context.MODE_PRIVATE);
+        usernameView.setText(sharedPreferences.getString(getString(R.string.pref_username_key), "Username"));
 
 
     }

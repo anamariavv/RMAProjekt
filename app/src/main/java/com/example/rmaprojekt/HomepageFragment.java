@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 
@@ -92,8 +93,6 @@ public class HomepageFragment extends Fragment {
                     @RequiresApi(api = Build.VERSION_CODES.N)
                     @Override
                     public void onSuccess(JSONObject result) {
-                        Log.d("mainpage Done", "success");
-
                         JSONArray entries;
                         ArrayList<JSONObject> summoners = new ArrayList<>();
 
@@ -153,8 +152,8 @@ public class HomepageFragment extends Fragment {
                     }
                     @Override
                     public void onError(VolleyError error) {
-                        //TODO display error
-                        Log.d("Done", error.getMessage());
+                        Toast toast = Toast.makeText(getContext(), "An error occured", Toast.LENGTH_LONG);
+                        toast.show();
                     }
                 });
         scrollview.addView(scrollChild);

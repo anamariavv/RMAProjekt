@@ -1,6 +1,8 @@
 package com.example.rmaprojekt;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,6 +16,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.android.volley.VolleyError;
+
+import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
@@ -85,16 +89,34 @@ public class RegisterFragment extends Fragment {
                 SingletonRequestSender.sendRequest(requestBody, getResources().getString(R.string.database_request_url),new SingletonRequestSender.RequestResult() {
                     @Override
                     public void onSuccess(JSONObject result) {
-                        Log.d("Done", result.toString());
-                        //TODO check responses
-                        Intent mainActivity = new Intent(getContext(), MainActivity.class);
-                        startActivity(mainActivity);
+                        try {
+                            if(result.get("response").equals("200")) {
+                                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("RMA", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putString(getString(R.string.pref_username_key), username);
+                                editor.commit();
+
+                                Intent mainActivity = new Intent(getContext(), MainActivity.class);
+                                startActivity(mainActivity);
+                            } else if(result.get("response").equals("WRONG_PASSWORD")) {
+                                Toast toast = Toast.makeText(getContext(), "Wrong password", Toast.LENGTH_LONG);
+                                toast.show();
+                            } else if(result.get("response").equals("EMAIL_TAKEN")) {
+                                Toast toast = Toast.makeText(getContext(), "Email already in use", Toast.LENGTH_LONG);
+                                toast.show();
+                            } else if(result.get("response").equals("USERNAME_TAKEN")) {
+                                Toast toast = Toast.makeText(getContext(), "Username already in use", Toast.LENGTH_LONG);
+                                toast.show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
 
                     @Override
                     public void onError(VolleyError error) {
-                        //TODO display error
-                        Log.d("Done", "Register failure "+ error.getMessage());
+                        Toast toast = Toast.makeText(getContext(), "An error occured", Toast.LENGTH_LONG);
+                        toast.show();
                     }
                 });
             }

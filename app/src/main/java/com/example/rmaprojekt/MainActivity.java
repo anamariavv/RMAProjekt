@@ -2,6 +2,7 @@ package com.example.rmaprojekt;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -10,9 +11,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -26,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Context context = this;
 
        sharedPref = this.getPreferences(Context.MODE_PRIVATE);
        sharedPrefEditor = sharedPref.edit();
@@ -77,6 +83,30 @@ public class MainActivity extends AppCompatActivity {
                                .setReorderingAllowed(true)
                                .addToBackStack(null)
                                .commit();
+                       break;
+                   case R.id.nav_logout:
+                       AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
+                       dialogBuilder.setMessage(getString(R.string.logout_dialog_text)).setTitle("Log out");
+                       dialogBuilder.setPositiveButton(R.string.logout_dialog_positive, new DialogInterface.OnClickListener() {
+                           @Override
+                           public void onClick(DialogInterface dialogInterface, int i) {
+                               SharedPreferences sharedPreferences = context.getSharedPreferences("RMA", Context.MODE_PRIVATE);
+                               SharedPreferences.Editor editor = sharedPreferences.edit();
+                               editor.clear();
+                               editor.apply();
+
+                               Intent loginIntent = new Intent(context, LoginActivity.class)
+                                       .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                               startActivity(loginIntent);
+                           }
+                       });
+                       dialogBuilder.setNegativeButton(R.string.logout_dialog_negative, new DialogInterface.OnClickListener() {
+                           @Override
+                           public void onClick(DialogInterface dialogInterface, int i) {
+                           }
+                       });
+                       AlertDialog dialog = dialogBuilder.create();
+                       dialog.show();
                        break;
                }
                navigationDrawer.closeDrawer(GravityCompat.START);
