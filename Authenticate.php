@@ -4,10 +4,6 @@
     $data = json_decode(file_get_contents('php://input'), true);
     $response = "ACCESS_DENIED";
 
-    function respond($response) {
-        echo json_encode(array("response"=>$response));
-    }
-
     if(strcmp($data["source"], "register") == 0) {
         $password = mysqli_real_escape_string($connection, $data["password"]);
         $name = mysqli_real_escape_string($connection, $data["name"]);
@@ -23,7 +19,6 @@
         //validate password
         if(!preg_match('/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/', $password)) {
             respond("INVALID_PASS");
-            fwrite($logfile, "pass invalidL " . $password);
         } 
        
         if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -31,26 +26,24 @@
         }
 
         //check for taken username/email
-        $result = database_select("user", "*", array("email"), array($email), "s");
+        $result = database_select("user", "*", array("email"), array($email), "s", false);
         if($result) {
             respond("EMAIL_TAKEN");
         } else {
-            $result = database_select("user", "*", array("username"), array($username), "s");
+            $result = database_select("user", "*", array("username"), array($username), "s", false);
             if($result) {
                 respond("USERNAME_TAKEN");
-                fwrite($logfile, "utaken");
             } else {
                 $hashed_password = password_hash($password, PASSWORD_BCRYPT);
                 //insert new user
                 $response = database_insert("user", array("name", "lastname", "email", "password", "username"),
                         "sssss", array( $name, $lastname, $email, $hashed_password, $username));
-               // respond($response);
+                respond($response);
 
             }
         }
    
         fclose($logfile);
-        respond("200");
     } else if(strcmp($data["source"], "login") == 0) {
         $password = mysqli_real_escape_string($connection, $data["password"]);
         $username = mysqli_real_escape_string($connection, $data["username"]);
@@ -60,7 +53,7 @@
         } 
 
         //check if entry exists by username
-        $result = database_select("user", "*", array("username"), array($username), "s");
+        $result = database_select("user", "*", array("username"), array($username), "s", false);
 
         if(!$result) {
             respond("DOESN'T_EXIST");
