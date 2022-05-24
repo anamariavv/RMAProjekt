@@ -72,6 +72,7 @@ public class LoginFragment extends Fragment {
             }
         });
 
+        //TODO check shared preferences for data, if exists then skip login page
         Button loginButton = view.findViewById(R.id.loginButton);
         EditText usernameView = view.findViewById(R.id.loginUsername);
         EditText passwordVIew = view.findViewById(R.id.loginPassword);
@@ -100,6 +101,7 @@ public class LoginFragment extends Fragment {
                                     SharedPreferences sharedPreferences = getActivity().getSharedPreferences("RMA", Context.MODE_PRIVATE);
                                     SharedPreferences.Editor editor = sharedPreferences.edit();
                                     editor.putString(getString(R.string.pref_username_key), username);
+                                    editor.putString("password", password);
                                     editor.apply();
 
                                     Intent mainActivity = new Intent(getContext(), MainActivity.class);

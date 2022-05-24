@@ -94,6 +94,7 @@ public class RegisterFragment extends Fragment {
                                 SharedPreferences sharedPreferences = getActivity().getSharedPreferences("RMA", Context.MODE_PRIVATE);
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString(getString(R.string.pref_username_key), username);
+                                editor.putString("password", passwordConfirmed);
                                 editor.commit();
 
                                 Intent mainActivity = new Intent(getContext(), MainActivity.class);

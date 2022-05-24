@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:padding="10dp"
         android:text="@string/profile_fragment_title"
         android:textAlignment="center"
         android:textSize="25dp" />
@@ -24,51 +26,143 @@
         android:layout_marginBottom="20dp"
         android:src="@drawable/ic_profile_icon_default" />
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/personal_info_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/profile_icon"
-        android:orientation="vertical">
+        android:layout_below="@id/profile_icon">
 
         <TextView
+            android:id="@+id/username_label"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:layout_below="@id/profile_icon"
+            android:layout_alignStart="@id/personal_info_layout"
+            android:layout_marginStart="-1dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Username"
+            android:textSize="8pt" />
+
+        <EditText
             android:id="@+id/profile_username"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"/>
+            android:layout_height="40dp"
+            android:layout_below="@id/profile_icon"
+            android:layout_marginTop="20dp"
+            android:layout_toEndOf="@id/username_label"
+            android:padding="10dp"
+            android:textSize="8pt" />
 
         <TextView
+            android:id="@+id/name_label"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:layout_below="@id/username_label"
+            android:layout_alignStart="@id/personal_info_layout"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Name"
+            android:textSize="8pt" />
+
+        <EditText
             android:id="@+id/profile_name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp" />
+            android:layout_height="40dp"
+            android:layout_below="@id/profile_username"
+            android:layout_marginTop="20dp"
+            android:layout_toEndOf="@id/name_label"
+            android:padding="10dp"
+            android:textSize="8pt" />
 
         <TextView
+            android:id="@+id/lastname_label"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:layout_below="@id/name_label"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Lastname"
+            android:textSize="8pt" />
+
+        <EditText
             android:id="@+id/profile_lastname"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp" />
+            android:layout_height="40dp"
+            android:layout_below="@id/profile_name"
+            android:layout_marginTop="20dp"
+            android:layout_toEndOf="@id/lastname_label"
+            android:padding="10dp"
+            android:textSize="8pt" />
 
         <TextView
+            android:id="@+id/email_label"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:layout_below="@id/lastname_label"
+            android:layout_alignStart="@id/personal_info_layout"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Email"
+            android:textSize="8pt" />
+
+        <EditText
             android:id="@+id/profile_email"
             android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@id/profile_lastname"
+            android:layout_marginTop="20dp"
+            android:layout_toEndOf="@id/email_label"
+            android:inputType="textEmailAddress"
+            android:padding="10dp"
+            android:textSize="8pt" />
+
+
+        <TextView
+            android:id="@+id/password_label"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:layout_below="@id/email_label"
+            android:layout_alignStart="@id/personal_info_layout"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Password"
+            android:textSize="8pt" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/profile_password_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"/>
+            android:layout_below="@id/profile_email"
+            android:layout_alignBaseline="@id/password_label"
+            android:layout_marginTop="20dp"
+            android:layout_toEndOf="@id/password_label"
+            app:passwordToggleEnabled="true">
+
+            <EditText
+                android:id="@+id/profile_password"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:inputType="textPassword"
+                android:textColorHint="@color/red"
+                android:textSize="8pt" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/profile_edit_info_button"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/profile_password_layout"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
             android:text="@string/profile_edit_info_button_text"
             android:textAllCaps="false" />
 
-        <Button
-            android:id="@+id/profile_change_password_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/profile_change_password_button_text"
-            android:textAllCaps="false" />
-
-    </LinearLayout>
+    </RelativeLayout>
 
 </RelativeLayout>
