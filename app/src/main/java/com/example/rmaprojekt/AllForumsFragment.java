@@ -12,19 +12,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class ForumFragment extends Fragment {
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+public class AllForumsFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
     private String mParam1;
     private String mParam2;
 
-    public ForumFragment() {}
+    public AllForumsFragment() {}
 
-
-    public static ForumFragment newInstance(String param1, String param2) {
-        ForumFragment fragment = new ForumFragment();
+    public static AllForumsFragment newInstance(String param1, String param2) {
+        AllForumsFragment fragment = new AllForumsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -42,20 +42,25 @@ public class ForumFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_forum, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_all_forums, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
-        AllForumsFragment allForumsFragment = new AllForumsFragment();
+        FloatingActionButton fab = view.findViewById(R.id.forum_topics_action_button);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
+                NewForumTopicFragment newForumTopicFragment = new NewForumTopicFragment();
 
-        fragmentTransaction.replace(R.id.forum_fragment_container, allForumsFragment)
-                .addToBackStack(null);
-        fragmentTransaction.commit();
-
+                fragmentTransaction.replace(R.id.forum_fragment_container, newForumTopicFragment).addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+        });
     }
 }
