@@ -6,11 +6,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,18 +22,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-public class ProfileFragment extends Fragment {
-    ProfileFragment thisFragment = this;
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+public class ProfileFragment extends Fragment implements IValidate {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
     private String mParam1;
     private String mParam2;
 
-    public ProfileFragment() {
-        // Required empty public constructor
-    }
+    public ProfileFragment(){}
 
     public static ProfileFragment newInstance(String param1, String param2) {
         ProfileFragment fragment = new ProfileFragment();
@@ -59,7 +52,6 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 
@@ -141,75 +133,73 @@ public class ProfileFragment extends Fragment {
 
             @Override
             public void onError(VolleyError error) {
-                Toast toast = Toast.makeText(getContext(), "An error occured", Toast.LENGTH_LONG);
+                Toast toast = Toast.makeText(getContext(), "An error occurred", Toast.LENGTH_LONG);
                 toast.show();
             }
         });
 
         Button editInfoButton = view.findViewById(R.id.profile_edit_info_button);
-        editInfoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                newInformation.put("old_username", sharedPreferences.getString("username", "Username"));
-                newInformation.put("source", "edit");
+        editInfoButton.setOnClickListener(view1 -> {
+            newInformation.put("old_username", sharedPreferences.getString("username", "Username"));
+            newInformation.put("source", "edit");
 
-                if(validate(newInformation)) {
-                    JSONObject requestBody = SingletonRequestSender.createJsonRequest(newInformation);
-                    SingletonRequestSender.sendRequest(requestBody, getResources().getString(R.string.profile_request_url), new SingletonRequestSender.RequestResult() {
-                        @Override
-                        public void onSuccess(JSONObject result) {
-                            Toast toast;
-                            try {
-                                if(result.get("response").equals("EMAIL_TAKEN")) {
-                                    toast = Toast.makeText(getContext(), "Email already in use", Toast.LENGTH_LONG);
-                                    toast.show();
-                                } else if(result.get("response").equals("USERNAME_TAKEN")) {
-                                    toast = Toast.makeText(getContext(), "Username already in use", Toast.LENGTH_LONG);
-                                    toast.show();
-                                } else {
-                                    SharedPreferences sharedPreferences = getActivity().getSharedPreferences("RMA", Context.MODE_PRIVATE);
-                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+            if(validateFormInfo(newInformation)) {
+                JSONObject requestBody1 = SingletonRequestSender.createJsonRequest(newInformation);
+                SingletonRequestSender.sendRequest(requestBody1, getResources().getString(R.string.profile_request_url), new SingletonRequestSender.RequestResult() {
+                    @Override
+                    public void onSuccess(JSONObject result) {
+                        Toast toast;
+                        try {
+                            if(result.get("response").equals("EMAIL_TAKEN")) {
+                                toast = Toast.makeText(getContext(), "Email already in use", Toast.LENGTH_LONG);
+                                toast.show();
+                            } else if(result.get("response").equals("USERNAME_TAKEN")) {
+                                toast = Toast.makeText(getContext(), "Username already in use", Toast.LENGTH_LONG);
+                                toast.show();
+                            } else {
+                                SharedPreferences sharedPreferences1 = getActivity().getSharedPreferences("RMA", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPreferences1.edit();
 
-                                    if(newInformation.containsKey("username")) {
-                                        editor.putString(getString(R.string.pref_username_key), newInformation.get("username"));
-                                    }
-                                    if(newInformation.containsKey("lastname")) {
-                                        editor.putString(getString(R.string.pref_lastname_key), newInformation.get("lastname"));
-                                    }
-                                    if(newInformation.containsKey("lastname")) {
-                                        editor.putString(getString(R.string.pref_name_key), newInformation.get("name"));
-                                    }
-                                    if(newInformation.containsKey("email")) {
-                                        editor.putString(getString(R.string.pref_email_key), newInformation.get("email"));
-                                    }
-                                    if(newInformation.containsKey("password")) {
-                                        editor.putString(getString(R.string.pref_password_key), newInformation.get("password"));
-                                    }
-                                    editor.apply();
-
-                                    toast = Toast.makeText(getContext(), "Information updated", Toast.LENGTH_LONG);
-                                    toast.show();
-
-                                    newInformation.clear();
+                                if(newInformation.containsKey("username")) {
+                                    editor.putString(getString(R.string.pref_username_key), newInformation.get("username"));
                                 }
-                            } catch(JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        @Override
-                        public void onError(VolleyError error) {
-                            Toast toast = Toast.makeText(getContext(), "An error occured: " + error.getMessage(), Toast.LENGTH_LONG);
-                            toast.show();
+                                if(newInformation.containsKey("lastname")) {
+                                    editor.putString(getString(R.string.pref_lastname_key), newInformation.get("lastname"));
+                                }
+                                if(newInformation.containsKey("lastname")) {
+                                    editor.putString(getString(R.string.pref_name_key), newInformation.get("name"));
+                                }
+                                if(newInformation.containsKey("email")) {
+                                    editor.putString(getString(R.string.pref_email_key), newInformation.get("email"));
+                                }
+                                if(newInformation.containsKey("password")) {
+                                    editor.putString(getString(R.string.pref_password_key), newInformation.get("password"));
+                                }
+                                editor.apply();
 
-                            newInformation.clear();
+                                toast = Toast.makeText(getContext(), "Information updated", Toast.LENGTH_LONG);
+                                toast.show();
+
+                                newInformation.clear();
+                            }
+                        } catch(JSONException e) {
+                            e.printStackTrace();
                         }
-                    });
-                }
+                    }
+                    @Override
+                    public void onError(VolleyError error) {
+                        Toast toast = Toast.makeText(getContext(), "An error occurred", Toast.LENGTH_LONG);
+                        toast.show();
+
+                        newInformation.clear();
+                    }
+                });
             }
         });
     }
 
-    private boolean validate(Map<String, String> newInformation) {
+    @Override
+    public boolean validateFormInfo(Map<String, String> newInformation) {
         Pattern passwordPattern = Pattern.compile("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$");
         Toast toast;
         boolean empty = false;
@@ -220,7 +210,7 @@ public class ProfileFragment extends Fragment {
             }
         }
 
-        if(empty == true) {
+        if(empty) {
             toast = Toast.makeText(getContext(), "Please fill in all fields", Toast.LENGTH_SHORT);
             toast.show();
             return false;

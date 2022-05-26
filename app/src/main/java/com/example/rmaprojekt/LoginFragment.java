@@ -8,7 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,21 +16,19 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.android.volley.VolleyError;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LoginFragment extends Fragment {
+public class LoginFragment extends Fragment implements IValidate {
 
     private static final String ARG_PARAM1 = "param1";
 
     private String name;
 
-    public LoginFragment() {
-        // Required empty public constructor
-    }
+    public LoginFragment() {}
+
     public static LoginFragment newInstance(String param1) {
         LoginFragment fragment = new LoginFragment();
         Bundle args = new Bundle();
@@ -51,7 +48,6 @@ public class LoginFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_login, container, false);
     }
 
@@ -62,70 +58,79 @@ public class LoginFragment extends Fragment {
         TextView registerLink = view.findViewById(R.id.registerLink);
         FragmentManager parentFragmentManager = getActivity().getSupportFragmentManager();
 
-        registerLink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                parentFragmentManager.beginTransaction().replace(R.id.fragmentFrame, new RegisterFragment())
-                        .setReorderingAllowed(true)
-                        .addToBackStack(null)
-                        .commit();
-            }
-        });
+        registerLink.setOnClickListener(view12 -> parentFragmentManager.beginTransaction().replace(R.id.fragmentFrame, new RegisterFragment())
+                .setReorderingAllowed(true)
+                .addToBackStack(null)
+                .commit());
 
-        //TODO check shared preferences for data, if exists then skip login page
         Button loginButton = view.findViewById(R.id.loginButton);
         EditText usernameView = view.findViewById(R.id.loginUsername);
         EditText passwordVIew = view.findViewById(R.id.loginPassword);
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String username = usernameView.getText().toString().trim();
-                String password = passwordVIew.getText().toString().trim();
+        loginButton.setOnClickListener(view1 -> {
+            String username = usernameView.getText().toString().trim();
+            String password = passwordVIew.getText().toString().trim();
 
-                if(username.isEmpty() || password.isEmpty()) {
-                    Toast toast = Toast.makeText(getContext(), "Please fill in all fields", Toast.LENGTH_SHORT);
-                    toast.show();
-                } else {
-                    Map<String, String> loginInfo = new HashMap<>();
-                    loginInfo.put("source", "login");
-                    loginInfo.put("username", username);
-                    loginInfo.put("password", password);
-                    JSONObject requestBody = SingletonRequestSender.createJsonRequest(loginInfo);
+            Map<String, String> loginInfo = new HashMap<>();
+            loginInfo.put("source", "login");
+            loginInfo.put("username", username);
+            loginInfo.put("password", password);
 
-                    SingletonRequestSender.sendRequest(requestBody, getResources().getString(R.string.database_request_url), new SingletonRequestSender.RequestResult() {
-                        @Override
-                        public void onSuccess(JSONObject result) {
-                            try {
-                                if(result.get("response").equals("200")) {
-                                    SharedPreferences sharedPreferences = getActivity().getSharedPreferences("RMA", Context.MODE_PRIVATE);
-                                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                                    editor.putString(getString(R.string.pref_username_key), username);
-                                    editor.putString("password", password);
-                                    editor.apply();
+             if(validateFormInfo(loginInfo)) {
+                JSONObject requestBody = SingletonRequestSender.createJsonRequest(loginInfo);
 
-                                    Intent mainActivity = new Intent(getContext(), MainActivity.class);
-                                    startActivity(mainActivity);
-                                } else if(result.get("response").equals("WRONG_PASSWORD")) {
-                                    Toast toast = Toast.makeText(getContext(), "Wrong password", Toast.LENGTH_LONG);
-                                    toast.show();
-                                } else {
-                                    Toast toast = Toast.makeText(getContext(), "User doesn't exist", Toast.LENGTH_LONG);
-                                    toast.show();
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                SingletonRequestSender.sendRequest(requestBody, getResources().getString(R.string.database_request_url), new SingletonRequestSender.RequestResult() {
+                    @Override
+                    public void onSuccess(JSONObject result) {
+                        try {
+                            if(result.get("response").equals("200")) {
+                                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("RMA", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putString(getString(R.string.pref_username_key), username);
+                                editor.putString("password", password);
+                                editor.apply();
+
+                                Intent mainActivity = new Intent(getContext(), MainActivity.class);
+                                startActivity(mainActivity);
+                            } else if(result.get("response").equals("WRONG_PASSWORD")) {
+                                Toast toast = Toast.makeText(getContext(), "Wrong password", Toast.LENGTH_LONG);
+                                toast.show();
+                            } else {
+                                Toast toast = Toast.makeText(getContext(), "User doesn't exist", Toast.LENGTH_LONG);
+                                toast.show();
                             }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
+                    }
 
-                        @Override
-                        public void onError(VolleyError error) {
-                            Toast toast = Toast.makeText(getContext(), "An error occured", Toast.LENGTH_LONG);
-                            toast.show();
-                        }
-                    });
-                }
+                    @Override
+                    public void onError(VolleyError error) {
+                        Toast toast = Toast.makeText(getContext(), "An error occurred", Toast.LENGTH_LONG);
+                        toast.show();
+                    }
+                });
             }
         });
+    }
+
+    @Override
+    public boolean validateFormInfo(Map<String, String> newInformation) {
+        Toast toast;
+        boolean empty = false;
+
+        for(Map.Entry<String, String> entry : newInformation.entrySet()) {
+            if(entry.getValue().isEmpty()) {
+                empty = true;
+            }
+        }
+
+        if(empty) {
+            toast = Toast.makeText(getContext(), "Please fill in all fields", Toast.LENGTH_SHORT);
+            toast.show();
+            return false;
+        }
+
+        return true;
     }
 }

@@ -8,8 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,13 +16,10 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.VolleyError;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -33,16 +28,13 @@ import java.util.Map;
 
 public class HomepageFragment extends Fragment {
 
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
     private String mParam1;
     private String mParam2;
 
-    public HomepageFragment() {
-        // Required empty public constructor
-    }
+    public HomepageFragment() {}
 
     public static HomepageFragment newInstance(String param1, String param2) {
         HomepageFragment fragment = new HomepageFragment();
@@ -65,7 +57,6 @@ public class HomepageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_homepage, container, false);
     }
 
@@ -152,7 +143,7 @@ public class HomepageFragment extends Fragment {
                     }
                     @Override
                     public void onError(VolleyError error) {
-                        Toast toast = Toast.makeText(getContext(), "An error occured", Toast.LENGTH_LONG);
+                        Toast toast = Toast.makeText(getContext(), "An error occurred", Toast.LENGTH_LONG);
                         toast.show();
                     }
                 });

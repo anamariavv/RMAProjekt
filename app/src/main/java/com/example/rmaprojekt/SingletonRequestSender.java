@@ -3,7 +3,6 @@ package com.example.rmaprojekt;
 import android.content.Context;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import org.json.JSONException;
@@ -37,18 +36,8 @@ public final class SingletonRequestSender {
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
                 url,object,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        callback.onSuccess(response);
-                    }
-               },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        callback.onError(error);
-                    }
-                });
+                response -> callback.onSuccess(response),
+                error -> callback.onError(error));
         SingletonRequestQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
     }
 

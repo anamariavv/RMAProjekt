@@ -7,7 +7,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,22 +15,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.android.volley.VolleyError;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-public class RegisterFragment extends Fragment {
-
+public class RegisterFragment extends Fragment implements IValidate {
     private static final String ARG_PARAM1 = "param1";
 
     private String mParam1;
 
-    public RegisterFragment() {
-        // Required empty public constructor
-    }
+    public RegisterFragment(){}
 
     public static RegisterFragment newInstance(String param1) {
         RegisterFragment fragment = new RegisterFragment();
@@ -52,7 +47,6 @@ public class RegisterFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_register, container, false);
     }
 
@@ -76,14 +70,17 @@ public class RegisterFragment extends Fragment {
             String password = passwordView.getText().toString().trim();
             String passwordConfirmed = confirmPassView.getText().toString().trim();
 
-            if(validate(name, lastname, username, email, password, passwordConfirmed)) {
-                Map<String, String> registerInfo = new HashMap<>();
-                registerInfo.put("source", "register");
-                registerInfo.put("name", name);
-                registerInfo.put("lastname", lastname);
-                registerInfo.put("username", username);
-                registerInfo.put("email", email);
-                registerInfo.put("password", password);
+            Map<String, String> registerInfo = new HashMap<>();
+            registerInfo.put("source", "register");
+            registerInfo.put("name", name);
+            registerInfo.put("lastname", lastname);
+            registerInfo.put("username", username);
+            registerInfo.put("email", email);
+            registerInfo.put("password", password);
+            registerInfo.put("passwordConfirmed", passwordConfirmed);
+
+            if(validateFormInfo(registerInfo)) {
+                registerInfo.remove("passwordConfirmed");
                 JSONObject requestBody = SingletonRequestSender.createJsonRequest(registerInfo);
 
                 SingletonRequestSender.sendRequest(requestBody, getResources().getString(R.string.database_request_url),new SingletonRequestSender.RequestResult() {
@@ -116,7 +113,7 @@ public class RegisterFragment extends Fragment {
 
                     @Override
                     public void onError(VolleyError error) {
-                        Toast toast = Toast.makeText(getContext(), "An error occured", Toast.LENGTH_LONG);
+                        Toast toast = Toast.makeText(getContext(), "An error occurred", Toast.LENGTH_LONG);
                         toast.show();
                     }
                 });
@@ -124,29 +121,36 @@ public class RegisterFragment extends Fragment {
         });
     }
 
-    private boolean validate(String name, String lastname, String username, String email, String password, String passwordConfirmed) {
+    @Override
+    public boolean validateFormInfo(Map<String, String> newInformation) {
         Pattern passwordPattern = Pattern.compile("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$");
         Toast toast;
+        boolean empty = false;
 
-        if(name.isEmpty() || lastname.isEmpty() || username.isEmpty() || email.isEmpty() || password.isEmpty()) {
+        for (Map.Entry<String, String> entry : newInformation.entrySet()) {
+            if (entry.getValue().isEmpty()) {
+                empty = true;
+            }
+        }
+
+        if (empty) {
             toast = Toast.makeText(getContext(), "Please fill in all fields", Toast.LENGTH_SHORT);
             toast.show();
             return false;
-        } else if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(newInformation.get("email")).matches()) {
             toast = Toast.makeText(getContext(), "Invalid email", Toast.LENGTH_SHORT);
             toast.show();
             return false;
-        } else if(!passwordPattern.matcher(password).matches()) {
+        } else if (!passwordPattern.matcher(newInformation.get("password")).matches()) {
             toast = Toast.makeText(getContext(),
                     "Password must be atleast 8 characters long and contain atleast one number and special character", Toast.LENGTH_LONG);
             toast.show();
             return false;
-        } else if(!passwordConfirmed.equals(password)) {
+        } else if(!newInformation.get("password").equals(newInformation.get("passwordConfirmed"))) {
             toast = Toast.makeText(getContext(), "Passwords must match", Toast.LENGTH_SHORT);
             toast.show();
             return false;
         }
-
         return true;
     }
 }
