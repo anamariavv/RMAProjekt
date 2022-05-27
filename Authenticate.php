@@ -5,17 +5,17 @@
     $response = "ACCESS_DENIED";
 
     if(strcmp($data["source"], "register") == 0) {
+        //check data
+        if(!check_empty($data)) {
+            respond("EMPTY_VALUES");
+        } 
+
         $password = mysqli_real_escape_string($connection, $data["password"]);
         $name = mysqli_real_escape_string($connection, $data["name"]);
         $lastname = mysqli_real_escape_string($connection, $data["lastname"]);
         $email = mysqli_real_escape_string($connection, $data["email"]);
         $username = mysqli_real_escape_string($connection, $data["username"]);       
   
-        //check data
-        if(!check_empty($data)) {
-            respond("EMPTY_VALUES");
-        } 
-    
         //validate password
         if(!preg_match('/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/', $password)) {
             respond("INVALID_PASS");
@@ -45,12 +45,13 @@
    
         fclose($logfile);
     } else if(strcmp($data["source"], "login") == 0) {
-        $password = mysqli_real_escape_string($connection, $data["password"]);
-        $username = mysqli_real_escape_string($connection, $data["username"]);
 
         if(!check_empty($data)) {
             respond("EMPTY_VALUES");
         } 
+
+        $password = mysqli_real_escape_string($connection, $data["password"]);
+        $username = mysqli_real_escape_string($connection, $data["username"]);
 
         //check if entry exists by username
         $result = database_select("user", "*", array("username"), array($username), "s", false);
@@ -61,6 +62,7 @@
 
         if(!password_verify($password, $result["password"])) {
             respond("WRONG_PASSWORD");
+            fwrite($GLOBALS["logfile"], "\npasswords: " .$password."--".$result["password"]);
         } 
                     
         fclose($logfile);
