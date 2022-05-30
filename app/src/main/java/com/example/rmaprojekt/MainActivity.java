@@ -9,6 +9,9 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -18,7 +21,10 @@ import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
 
+import org.json.JSONObject;
+
 public class MainActivity extends AppCompatActivity {
+    private SharedViewModel sharedViewModel;
     private DrawerLayout navigationDrawer;
     protected SharedPreferences sharedPref;
     protected SharedPreferences.Editor sharedPrefEditor;
@@ -29,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Context context = this;
+
+        sharedViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
 
         sharedPref = this.getPreferences(Context.MODE_PRIVATE);
         sharedPrefEditor = sharedPref.edit();

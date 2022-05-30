@@ -1,5 +1,6 @@
 package com.example.rmaprojekt;
 
+import android.icu.util.BuddhistCalendar;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -7,12 +8,15 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -30,7 +34,13 @@ import org.w3c.dom.Text;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Displays all possible forums (forum topics). Click on a certain forum to view
+ * all its comments and interact with it
+ */
+
 public class AllForumsFragment extends Fragment {
+    private SharedViewModel viewModel;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -102,6 +112,20 @@ public class AllForumsFragment extends Fragment {
                         forumLayout.setPadding(10,20,0,20);
                         forumLayout.setClickable(true);
 
+                        viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+                        forumLayout.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                viewModel.setInfoObject(currentObject);
+
+                                FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
+                                SingleForumTopicFragment singleForumTopicFragment = new SingleForumTopicFragment();
+                                fragmentTransaction.replace(R.id.forum_fragment_container, singleForumTopicFragment)
+                                        .addToBackStack(null)
+                                        .commit();
+                            }
+                        });
+
                         RelativeLayout.LayoutParams idParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                         id.setLayoutParams(idParams);
                         id.setId(View.generateViewId());
@@ -122,6 +146,7 @@ public class AllForumsFragment extends Fragment {
                         publishedParams.addRule(RelativeLayout.ALIGN_PARENT_END, RelativeLayout.TRUE);
                         published.setLayoutParams(publishedParams);
                         published.setId(View.generateViewId());
+                        published.setPadding(0,0,10,0);
                         published.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
                         published.setText(currentObject.getString("publish_date"));
 
@@ -135,17 +160,50 @@ public class AllForumsFragment extends Fragment {
                         RelativeLayout.LayoutParams textParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                         textParams.addRule(RelativeLayout.BELOW, author.getId());
                         text.setLayoutParams(textParams);
+                        text.setPadding(0,0,0,50);
                         text.setMaxLines(5);
                         text.setTextSize(TEXT_SIZE);
                         text.setEllipsize(TextUtils.TruncateAt.END);
                         text.setId(View.generateViewId());
                         text.setText(currentObject.getString("text"));
 
+                        LinearLayout interactionLayout = new LinearLayout(getContext());
+                        interactionLayout.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                        interactionLayout.setOrientation(LinearLayout.HORIZONTAL);
+                        RelativeLayout.LayoutParams interactionLayoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        interactionLayoutParams.addRule(RelativeLayout.BELOW, text.getId());
+                        interactionLayout.setLayoutParams(interactionLayoutParams);
+
+                        ImageView likeView = new ImageView(getContext());
+                        likeView.setImageResource(R.drawable.ic_like);
+                        likeView.setPadding(10,0,5,0);
+                        likeView.setId(View.generateViewId());
+
+                        TextView likeCount = new TextView(getContext());
+                        likeCount.setText(currentObject.getString("likes"));
+                        likeCount.setPadding(0,0,30,0);
+                        likeCount.setId(View.generateViewId());
+
+                        ImageView dislikeView = new ImageView(getContext());
+                        dislikeView.setImageResource(R.drawable.ic_dislike);
+                        dislikeView.setPadding(10,0,5,0);
+                        dislikeView.setId(View.generateViewId());
+
+                        TextView dislikeCount = new TextView(getContext());
+                        dislikeCount.setText(currentObject.getString("dislikes"));
+                        dislikeCount.setId(View.generateViewId());
+
+                        interactionLayout.addView(likeView);
+                        interactionLayout.addView(likeCount);
+                        interactionLayout.addView(dislikeView);
+                        interactionLayout.addView(dislikeCount);
+
                         forumLayout.addView(title);
                         forumLayout.addView(author);
                         forumLayout.addView(id);
                         forumLayout.addView(published);
                         forumLayout.addView(text);
+                        forumLayout.addView(interactionLayout);
                         scrollChild.addView(forumLayout);
                     }
                 } catch (JSONException e) {

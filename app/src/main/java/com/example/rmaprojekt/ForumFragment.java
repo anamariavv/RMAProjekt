@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+//Parent fragment for all forum fragments
 public class ForumFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
@@ -53,8 +54,7 @@ public class ForumFragment extends Fragment {
         FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
         AllForumsFragment allForumsFragment = new AllForumsFragment();
 
-        fragmentTransaction.replace(R.id.forum_fragment_container, allForumsFragment)
-                .addToBackStack(null);
+        fragmentTransaction.replace(R.id.forum_fragment_container, allForumsFragment);
         fragmentTransaction.commit();
 
     }
