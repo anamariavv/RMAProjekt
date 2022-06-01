@@ -6,7 +6,7 @@
 
     if(strcmp($data["source"], "register") == 0) {
         //check data
-        if(!check_empty($data)) {
+        if(check_empty($data)) {
             respond("EMPTY_VALUES");
         } 
 
@@ -46,7 +46,7 @@
         fclose($logfile);
     } else if(strcmp($data["source"], "login") == 0) {
 
-        if(!check_empty($data)) {
+        if(check_empty($data)) {
             respond("EMPTY_VALUES");
         } 
 

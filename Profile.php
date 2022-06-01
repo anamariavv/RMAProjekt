@@ -7,7 +7,7 @@
     
     if(strcmp($data["source"], "display") == 0) {
 
-        if(!check_empty($data)) {
+        if(check_empty($data)) {
             respond("EMPTY_VALUES");
         } 
 
@@ -22,7 +22,7 @@
        respond($response);
     } else if(strcmp($data["source"], "edit") == 0) {
         
-        if(!check_empty($data)) {
+        if(check_empty($data)) {
             respond("EMPTY_VALUES");
         }  
 
