@@ -96,7 +96,7 @@ public class AllForumsFragment extends Fragment {
             public void onSuccess(JSONObject result) {
 
                 try {
-                    JSONArray allForums = result.getJSONArray("response");
+                    JSONArray allForums = result.getJSONArray("rows");
                     for(int i = 0; i < allForums.length(); i++) {
                         JSONObject currentObject = allForums.getJSONObject(i);
 
