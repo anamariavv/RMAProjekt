@@ -118,11 +118,13 @@ public class AllForumsFragment extends Fragment {
                             public void onClick(View view) {
                                 viewModel.setInfoObject(currentObject);
 
-                                FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
-                                SingleForumTopicFragment singleForumTopicFragment = new SingleForumTopicFragment();
-                                fragmentTransaction.replace(R.id.forum_fragment_container, singleForumTopicFragment)
-                                        .addToBackStack(null)
-                                        .commit();
+                                if (savedInstanceState == null) {
+                                    getParentFragmentManager().beginTransaction().replace(R.id.forum_fragment_container, SingleForumTopicFragment.class, null)
+                                            .setReorderingAllowed(true)
+                                            .addToBackStack(null)
+                                            .commit();
+                                }
+
                             }
                         });
 
@@ -232,4 +234,5 @@ public class AllForumsFragment extends Fragment {
             }
         });
     }
+
 }

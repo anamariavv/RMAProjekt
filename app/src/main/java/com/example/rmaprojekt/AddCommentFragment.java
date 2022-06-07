@@ -71,8 +71,7 @@ public class AddCommentFragment extends Fragment {
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
         sharedViewModel.getInfObject().observe(getViewLifecycleOwner(), jsonObject -> {
             try {
-                Log.d("datazz", jsonObject.toString());
-                idView.setText(jsonObject.getString("forum_topic_id"));
+                idView.setText(jsonObject.getString("id"));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -100,8 +99,11 @@ public class AddCommentFragment extends Fragment {
                             Toast toast = Toast.makeText(getContext(), "Comment posted", Toast.LENGTH_LONG);
                             toast.show();
 
-                            FragmentManager fragmentManager = getParentFragmentManager();
-                            fragmentManager.popBackStack();
+                            if (savedInstanceState == null) {
+                                getParentFragmentManager().beginTransaction().replace(R.id.forum_fragment_container, SingleForumTopicFragment.class, null)
+                                        .setReorderingAllowed(true)
+                                        .commit();
+                            }
                         }
 
                         @Override

@@ -51,11 +51,12 @@ public class ForumFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
-        AllForumsFragment allForumsFragment = new AllForumsFragment();
-
-        fragmentTransaction.replace(R.id.forum_fragment_container, allForumsFragment);
-        fragmentTransaction.commit();
+        if (savedInstanceState == null) {
+            getChildFragmentManager().beginTransaction().replace(R.id.forum_fragment_container, AllForumsFragment.class, null)
+                    .setReorderingAllowed(true)
+                    .addToBackStack(null)
+                    .commit();
+        }
 
     }
 }

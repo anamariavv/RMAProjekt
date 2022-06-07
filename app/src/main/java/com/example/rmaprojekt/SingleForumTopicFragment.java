@@ -109,18 +109,12 @@ public class SingleForumTopicFragment extends Fragment {
         addCommentActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    JSONObject commentObject = new JSONObject().put("forum_topic_id", id.getText().toString().trim());
-                    sharedViewModel.setInfoObject(commentObject);
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                if (savedInstanceState == null) {
+                    getParentFragmentManager().beginTransaction().replace(R.id.forum_fragment_container, AddCommentFragment.class, null)
+                            .setReorderingAllowed(true)
+                            .addToBackStack(null)
+                            .commit();
                 }
-
-                FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
-                AddCommentFragment addCommentFragment = new AddCommentFragment();
-                fragmentTransaction.replace(R.id.forum_fragment_container, addCommentFragment)
-                        .addToBackStack(null)
-                        .commit();
             }
         });
     }

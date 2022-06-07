@@ -84,8 +84,11 @@ public class NewForumTopicFragment extends Fragment implements IValidate {
                         Toast toast = Toast.makeText(getContext(), "Posted successfully", Toast.LENGTH_LONG);
                         toast.show();
 
-                        FragmentManager fragmentManager = getParentFragmentManager();
-                        fragmentManager.popBackStack();
+                        if (savedInstanceState == null) {
+                            getParentFragmentManager().beginTransaction().replace(R.id.forum_fragment_container, AllForumsFragment.class, null)
+                                    .setReorderingAllowed(true)
+                                    .commit();
+                        }
                     }
 
                     @Override
