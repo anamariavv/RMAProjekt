@@ -9,11 +9,14 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
+
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import com.google.android.material.navigation.NavigationView;
 
@@ -79,7 +82,8 @@ public class MainActivity extends AppCompatActivity {
         switchFragment(HomepageFragment.class, savedInstanceState);
     }
 
-    public void switchFragment (Class fragmentClass, Bundle savedInstanceState) {
+
+    private void switchFragment (Class fragmentClass, Bundle savedInstanceState) {
         if (savedInstanceState == null) {
             fragmentManager.beginTransaction().replace(R.id.main_fragment_frame, fragmentClass, null)
                     .setReorderingAllowed(true)
@@ -88,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void createShowDialog() {
+    private void createShowDialog() {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(MainActivity.this);
         dialogBuilder.setMessage(getString(R.string.logout_dialog_text)).setTitle("Log out");
         dialogBuilder.setPositiveButton(R.string.logout_dialog_positive, new DialogInterface.OnClickListener() {

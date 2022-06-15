@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +45,23 @@ public class HomepageFragment extends Fragment {
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public static class summonerComparator implements Comparator<JSONObject> {
+
+        @Override
+        public int compare(JSONObject summoner1, JSONObject summoner2) {
+            try {
+                if(summoner1.getInt("leaguePoints") > summoner2.getInt("leaguePoints")) {
+                    return 1;
+                } else if (summoner1.getInt("leaguePoints") < summoner2.getInt("leaguePoints")) {
+                    return -1;
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return 0;
+        }
     }
 
     @Override
@@ -150,20 +169,4 @@ public class HomepageFragment extends Fragment {
         scrollview.addView(scrollChild);
     }
 
-    public static class summonerComparator implements Comparator<JSONObject> {
-
-        @Override
-        public int compare(JSONObject summoner1, JSONObject summoner2) {
-            try {
-                if(summoner1.getInt("leaguePoints") > summoner2.getInt("leaguePoints")) {
-                    return 1;
-                } else if (summoner1.getInt("leaguePoints") < summoner2.getInt("leaguePoints")) {
-                    return -1;
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return 0;
-        }
-    }
 }
