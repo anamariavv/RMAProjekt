@@ -13,11 +13,11 @@
         app:queryHint="Summoner search"
         app:iconifiedByDefault="false"/>
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/search_fragment_container"
-        android:layout_below="@id/summoner_search"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/summoner_profile_recycler"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"/>
+        android:layout_height="650dp"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/summoner_search"/>
 
 </RelativeLayout>

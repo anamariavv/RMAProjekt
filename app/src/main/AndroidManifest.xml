@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true"
-        android:windowSoftInputMode="adjustResize">
+        android:windowSoftInputMode="adjustPan">
         <activity
             android:name=".LoginActivity"
             android:exported="true"

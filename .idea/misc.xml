@@ -11,6 +11,7 @@
         <entry key="..\:/Users/anama/AndroidStudioProjects/RMAProjekt/app/src/main/res/drawable/ic_profile.xml" value="0.214" />
         <entry key="..\:/Users/anama/AndroidStudioProjects/RMAProjekt/app/src/main/res/drawable/popup_background.xml" value="0.192" />
         <entry key="..\:/Users/anama/AndroidStudioProjects/RMAProjekt/app/src/main/res/drawable/rounded_edittext.xml" value="0.214" />
+        <entry key="..\:/Users/anama/AndroidStudioProjects/RMAProjekt/app/src/main/res/drawable/square.xml" value="0.2215" />
         <entry key="..\:/Users/anama/AndroidStudioProjects/RMAProjekt/app/src/main/res/layout/activity_homepage.xml" value="0.24635416666666668" />
         <entry key="..\:/Users/anama/AndroidStudioProjects/RMAProjekt/app/src/main/res/layout/activity_login.xml" value="0.264" />
         <entry key="..\:/Users/anama/AndroidStudioProjects/RMAProjekt/app/src/main/res/layout/activity_main.xml" value="0.264" />
@@ -31,6 +32,7 @@
         <entry key="..\:/Users/anama/AndroidStudioProjects/RMAProjekt/app/src/main/res/layout/fragment_search_result.xml" value="0.264" />
         <entry key="..\:/Users/anama/AndroidStudioProjects/RMAProjekt/app/src/main/res/layout/fragment_single_forum_topic.xml" value="0.264" />
         <entry key="..\:/Users/anama/AndroidStudioProjects/RMAProjekt/app/src/main/res/layout/navigation_drawer_header.xml" value="0.2" />
+        <entry key="..\:/Users/anama/AndroidStudioProjects/RMAProjekt/app/src/main/res/layout/summoner_match.xml" value="0.264" />
         <entry key="..\:/Users/anama/AndroidStudioProjects/RMAProjekt/app/src/main/res/menu/navigation_drawer_menu.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/anama/AndroidStudioProjects/RMAProjekt/app/src/main/res/menu/profile_navigation_menu.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/anama/AndroidStudioProjects/RMAProjekt/app/src/main/res/xml/network_security_config.xml" value="0.17864583333333334" />

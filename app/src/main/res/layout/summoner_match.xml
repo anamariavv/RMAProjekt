@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="130dp"
+    android:id="@+id/match_parent">
+
+    <ImageView
+        android:id="@+id/champ"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/ic_loading" />
+
+    <TextView
+        android:id="@+id/outcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="VICTORY"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/kda"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0/0/0"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/outcome"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/mode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="20dp"
+        android:text="Normal" />
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1.6.2022."
+        android:layout_alignParentEnd="true"
+        android:layout_alignStart="@id/mode"
+        android:layout_below="@id/mode"/>
+
+    <TextView
+        android:id="@+id/duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/date"
+        android:layout_alignStart="@id/mode"
+        android:layout_alignParentEnd="true"
+        android:text="20 min" />
+
+    <ImageView
+        android:id="@+id/rune1"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/champ"
+        android:src="@drawable/ic_loading" />
+
+    <ImageView
+        android:id="@+id/rune2"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/champ"
+        android:layout_toEndOf="@id/rune1"
+        android:src="@drawable/ic_loading" />
+
+
+    <ImageView
+        android:id="@+id/item1"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/champ"
+        android:layout_marginLeft="30dp"
+        android:layout_toEndOf="@id/rune2"
+        android:src="@drawable/ic_loading" />
+
+    <ImageView
+        android:id="@+id/item2"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/champ"
+        android:layout_toEndOf="@id/item1"
+        android:src="@drawable/ic_loading"/>
+
+    <ImageView
+        android:id="@+id/item3"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/champ"
+        android:layout_toEndOf="@id/item2"
+        android:src="@drawable/ic_loading"/>
+
+    <ImageView
+        android:id="@+id/item4"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/champ"
+        android:layout_toEndOf="@id/item3"
+        android:src="@drawable/ic_loading"/>
+
+    <ImageView
+        android:id="@+id/item5"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/champ"
+        android:layout_toEndOf="@id/item4"
+        android:src="@drawable/ic_loading"/>
+
+    <ImageView
+        android:id="@+id/spell1"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/champ"
+        android:layout_toEndOf="@id/item5"
+        android:layout_marginLeft="20dp"
+        android:src="@drawable/ic_loading"/>
+    <ImageView
+        android:id="@+id/spell2"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/champ"
+        android:layout_toEndOf="@id/spell1"
+
+        android:src="@drawable/ic_loading"/>
+
+</RelativeLayout>
