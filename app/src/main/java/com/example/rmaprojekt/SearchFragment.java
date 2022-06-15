@@ -87,7 +87,6 @@ public class SearchFragment extends Fragment {
                 SingletonRequestSender.sendRequest(requestBody, getResources().getString(R.string.request_url), new SingletonRequestSender.RequestResult() {
                     @Override
                     public void onSuccess(JSONObject result) {
-                        //TODO FINALLY GOT THE FREAKING DATA, MAKE THE VIEW
                         Log.d("summoner:", result.toString());
                         createView(result);
                     }
