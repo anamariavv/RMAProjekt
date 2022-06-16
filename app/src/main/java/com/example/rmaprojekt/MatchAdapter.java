@@ -1,6 +1,7 @@
 package com.example.rmaprojekt;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -59,6 +62,10 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.MatchViewHol
         holder.mode.setText(mode);
         holder.date.setText(date);
         holder.duration.setText(duration);
+
+        Picasso.get().load("http://ddragon.leagueoflegends.com/cdn/12.11.1/img/champion/Ahri.png")
+                .into(holder.champPicture);
+
     }
 
     @Override

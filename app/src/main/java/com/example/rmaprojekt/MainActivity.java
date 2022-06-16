@@ -20,7 +20,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import com.google.android.material.navigation.NavigationView;
 
-
 public class MainActivity extends AppCompatActivity {
     private SharedViewModel sharedViewModel;
     private DrawerLayout navigationDrawer;

@@ -121,11 +121,24 @@ public class SearchFragment extends Fragment {
         String assists = summoner.get("assists").toString();
         String deaths = summoner.get("deaths").toString();
         String kills = summoner.get("kills").toString();
-        String kda = kills+"/"+deaths+"/"+assists;
+        String kda = String.format("%s/%s/%s", kills, deaths, assists);
 
         String mode = matchObject.getJSONObject("info").get("gameMode").toString();
         String date = matchObject.getJSONObject("info").get("gameCreation").toString();
-        String duration = matchObject.getJSONObject("info").get("gameDuration").toString();
+
+        int duration_number = (int)matchObject.getJSONObject("info").get("gameDuration");
+        int minutes;
+        int seconds;
+
+        if(matchObject.getJSONObject("info").isNull("gameEndTimestamp")) {
+            minutes = (duration_number / 1000) / 60;
+            seconds = (duration_number /1000 ) % 60;
+        } else {
+            minutes = duration_number / 60;
+            seconds = duration_number % 60;
+        }
+
+        String duration = minutes + ":" + seconds;
 
         return new SummonerMatch("a","a","a","a","a",
                 "a","a","a","a","a", victory,kda, mode, date, duration);
