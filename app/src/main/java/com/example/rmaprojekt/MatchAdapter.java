@@ -32,25 +32,33 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.MatchViewHol
     public void onBindViewHolder(@NonNull MatchViewHolder holder, int position) {
         SummonerMatch currentMatch = matches.get(position);
 
-        int champIconId = currentMatch.getChampIconId();
-        int rune1Id = currentMatch.getRune1Id();
-        int rune2Id = currentMatch.getRune2Id();
-        int spell1Id = currentMatch.getSpell1Id();
-        int spell2Id = currentMatch.getItem2Id();
-        int item1Id = currentMatch.getItem1Id();
-        int item2Id = currentMatch.getItem2Id();
-        int item3Id = currentMatch.getItem3Id();
-        int item4Id = currentMatch.getItem4Id();
-        int item5Id = currentMatch.getItem5Id();
+        String champIconUrl = currentMatch.getChampIconUrl();
+        String rune1Url = currentMatch.getRune1Url();
+        String rune2Url = currentMatch.getRune2Url();
+        String spell1Url = currentMatch.getSpell1Url();
+        String spell2Url = currentMatch.getItem2Url();
+        String item1Url = currentMatch.getItem1Url();
+        String item2Url = currentMatch.getItem2Url();
+        String item3Url = currentMatch.getItem3Url();
+        String item4Url = currentMatch.getItem4Url();
+        String item5Url = currentMatch.getItem5Url();
         Boolean victory = currentMatch.getVictory();
         String kda = currentMatch.getKda();
         String mode = currentMatch.getMode();
         String date = currentMatch.getDate();
         String duration = currentMatch.getDuration();
 
-        //TODO set holder values
-        holder.outcome.setText(victory.toString());
-        holder.kda.setText("0/0/0");
+        //TODO set images
+
+        if(!victory) {
+            holder.outcome.setText("VICTORY");
+        } else {
+            holder.outcome.setText("DEFEAT");
+        }
+        holder.kda.setText(kda);
+        holder.mode.setText(mode);
+        holder.date.setText(date);
+        holder.duration.setText(duration);
     }
 
     @Override
@@ -72,6 +80,7 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.MatchViewHol
         public TextView outcome;
         public TextView kda;
         public TextView mode;
+        public TextView date;
         public TextView duration;
 
         public MatchViewHolder(@NonNull View itemView) {
@@ -90,6 +99,7 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.MatchViewHol
             outcome = itemView.findViewById(R.id.outcome);
             kda = itemView.findViewById(R.id.kda);
             mode = itemView.findViewById(R.id.mode);
+            date = itemView.findViewById(R.id.date);
             duration = itemView.findViewById(R.id.duration);
         }
     }

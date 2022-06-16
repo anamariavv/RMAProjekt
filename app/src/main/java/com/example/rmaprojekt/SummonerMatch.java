@@ -4,33 +4,33 @@ import java.time.LocalDate;
 
 public class SummonerMatch {
     //TODO change fields
-    private int champIconId;
-    private int rune1Id;
-    private int rune2Id;
-    private int spell1Id;
-    private int spell2Id;
-    private int item1Id;
-    private int item2Id;
-    private int item3Id;
-    private int item4Id;
-    private int item5Id;
+    private String champIconUrl;
+    private String rune1Url;
+    private String rune2Url;
+    private String spell1Url;
+    private String spell2Url;
+    private String item1Url;
+    private String item2Url;
+    private String item3Url;
+    private String item4Url;
+    private String item5Url;
     private Boolean victory;
     private String kda;
     private String mode;
     private String date;
     private String duration;
 
-    public SummonerMatch(int champIconId, int rune1Id, int rune2Id, int spell1Id, int spell2Id, int item1Id, int item2Id, int item3Id, int item4Id, int item5Id, Boolean victory, String kda, String mode, String date, String duration) {
-        this.champIconId = champIconId;
-        this.rune1Id = rune1Id;
-        this.rune2Id = rune2Id;
-        this.spell1Id = spell1Id;
-        this.spell2Id = spell2Id;
-        this.item1Id = item1Id;
-        this.item2Id = item2Id;
-        this.item3Id = item3Id;
-        this.item4Id = item4Id;
-        this.item5Id = item5Id;
+    public SummonerMatch(String champIconUrl, String rune1Url, String rune2Url, String spell1Url, String spell2Url, String item1Url, String item2Url, String item3Url, String item4Url, String item5Url, Boolean victory, String kda, String mode, String date, String duration) {
+        this.champIconUrl = champIconUrl;
+        this.rune1Url = rune1Url;
+        this.rune2Url = rune2Url;
+        this.spell1Url = spell1Url;
+        this.spell2Url = spell2Url;
+        this.item1Url = item1Url;
+        this.item2Url = item2Url;
+        this.item3Url = item3Url;
+        this.item4Url = item4Url;
+        this.item5Url = item5Url;
         this.victory = victory;
         this.kda = kda;
         this.mode = mode;
@@ -38,44 +38,44 @@ public class SummonerMatch {
         this.duration = duration;
     }
 
-    public int getChampIconId() {
-        return champIconId;
+    public String getChampIconUrl() {
+        return champIconUrl;
     }
 
-    public int getRune1Id() {
-        return rune1Id;
+    public String getRune1Url() {
+        return rune1Url;
     }
 
-    public int getRune2Id() {
-        return rune2Id;
+    public String getRune2Url() {
+        return rune2Url;
     }
 
-    public int getSpell1Id() {
-        return spell1Id;
+    public String getSpell1Url() {
+        return spell1Url;
     }
 
-    public int getSpell2Id() {
-        return spell2Id;
+    public String getSpell2Url() {
+        return spell2Url;
     }
 
-    public int getItem1Id() {
-        return item1Id;
+    public String getItem1Url() {
+        return item1Url;
     }
 
-    public int getItem2Id() {
-        return item2Id;
+    public String getItem2Url() {
+        return item2Url;
     }
 
-    public int getItem3Id() {
-        return item3Id;
+    public String getItem3Url() {
+        return item3Url;
     }
 
-    public int getItem4Id() {
-        return item4Id;
+    public String getItem4Url() {
+        return item4Url;
     }
 
-    public int getItem5Id() {
-        return item5Id;
+    public String getItem5Url() {
+        return item5Url;
     }
 
     public Boolean getVictory() {

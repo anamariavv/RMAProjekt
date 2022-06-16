@@ -31,17 +31,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_marginRight="20dp"
+        android:layout_marginRight="40dp"
         android:text="Normal" />
 
     <TextView
         android:id="@+id/date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="1.6.2022."
-        android:layout_alignParentEnd="true"
+        android:layout_below="@id/mode"
         android:layout_alignStart="@id/mode"
-        android:layout_below="@id/mode"/>
+        android:layout_alignParentEnd="true"
+        android:text="1.6.2022." />
 
     <TextView
         android:id="@+id/duration"
@@ -73,7 +73,7 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_below="@id/champ"
-        android:layout_marginLeft="30dp"
+        android:layout_marginLeft="20dp"
         android:layout_toEndOf="@id/rune2"
         android:src="@drawable/ic_loading" />
 
