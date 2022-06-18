@@ -6,49 +6,59 @@
     android:orientation="vertical"
     tools:context=".HomepageFragment">
 
-    <RelativeLayout
-        android:id="@+id/list_header"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.1"
-        android:background="@color/white">
+        android:layout_height="40dp"
+        android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/summonerPosition"
-            android:layout_width="100dp"
+            android:layout_width="30dp"
             android:layout_height="match_parent"
-            android:layout_alignParentStart="true"
-            android:text="@string/header_position"
-            android:textAlignment="viewStart"
-            android:textSize="20dp"></TextView>
+            android:text="No."
+            android:gravity="center"
+            android:textAlignment="gravity"/>
 
         <TextView
-            android:id="@+id/summonerName"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="match_parent"
-            android:layout_toStartOf="@id/summonerPoints"
-            android:layout_toEndOf="@id/summonerPosition"
-            android:text="@string/header_summoner"
-            android:textAlignment="center"
-            android:textSize="20dp"></TextView>
+            android:text="Summoner Name"
+            android:gravity="center"
+            android:textAlignment="gravity"/>
 
         <TextView
-            android:id="@+id/summonerPoints"
-            android:layout_width="100dp"
+            android:layout_width="40dp"
             android:layout_height="match_parent"
-            android:layout_alignParentEnd="true"
-            android:text="@string/header_points"
-            android:textAlignment="center"
-            android:textSize="20dp"></TextView>
-    </RelativeLayout>
+            android:text="Rank"
+            android:gravity="center"
+            android:textAlignment="gravity"/>
 
-    <ScrollView
-        android:id="@+id/home_scroll"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_below="@id/list_header"
-        android:layout_alignParentBottom="true"
-        android:layout_weight="0.8"
-        tools:ignore="SpeakableTextPresentCheck"></ScrollView>
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:text="Wins"
+            android:gravity="center"
+            android:textAlignment="gravity"/>
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:text="Losses"
+            android:gravity="center"
+            android:textAlignment="gravity"/>
+
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:text="Lp"
+            android:gravity="center"
+            android:textAlignment="gravity"/>
+
+    </LinearLayout>
+
+   <androidx.recyclerview.widget.RecyclerView
+       android:id="@+id/homepage_recycler_view"
+       android:layout_width="match_parent"
+       android:layout_height="0dp"
+       android:layout_weight="0.9"/>
 
 </LinearLayout>
