@@ -22,15 +22,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SearchFragment extends Fragment {
+    private static final int NUM_MATCHES = 10;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private View profileFragmentView;
-    private ScrollView summonerProfileScrollView;
     private String mParam1;
     private String mParam2;
     private RecyclerView matchRecyclerView;
     private MatchAdapter matchAdapter;
     private ArrayList<SummonerMatch> matches;
+
     public SearchFragment() {
     }
 
@@ -84,15 +85,19 @@ public class SearchFragment extends Fragment {
                 SingletonRequestSender.sendRequest(requestBody, getResources().getString(R.string.request_url), new SingletonRequestSender.RequestResult() {
                     @Override
                     public void onSuccess(JSONObject result) {
-                        matches.clear();
-
                         try {
-                            for(int i = 0; i < 10; i++) {
-                                SummonerMatch newMatch = createMatch(result.getJSONObject(String.valueOf(i)));
-                                matches.add(newMatch);
+                            if(!result.isNull("status") && result.getJSONObject("status").getString("message").equals("Data not found - summoner not found")) {
+                               Log.d("res not found", result.toString());
+                               errorOrNull("Summoner doesn't exist");
+                            } else {
+                                matches.clear();
+                                for(int i = 0; i < NUM_MATCHES; i++) {
+                                    SummonerMatch newMatch = createMatch(result.getJSONObject(String.valueOf(i)));
+                                    matches.add(newMatch);
+                                }
+                                matchAdapter = new MatchAdapter(getContext(), matches);
+                                matchRecyclerView.setAdapter(matchAdapter);
                             }
-                            matchAdapter = new MatchAdapter(getContext(), matches);
-                            matchRecyclerView.setAdapter(matchAdapter);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -100,8 +105,7 @@ public class SearchFragment extends Fragment {
 
                     @Override
                     public void onError(VolleyError error) {
-                        Toast toast = Toast.makeText(getContext(), "An error occurred", Toast.LENGTH_LONG);
-                        toast.show();
+                       errorOrNull("An error occurred");
                     }
                 });
                 return true;
@@ -115,32 +119,37 @@ public class SearchFragment extends Fragment {
 
     }
 
+    private void errorOrNull(String message) {
+        Toast toast = Toast.makeText(getContext(), message, Toast.LENGTH_LONG);
+        toast.show();
+    }
+
     private SummonerMatch createMatch(JSONObject matchObject) throws JSONException {
         JSONObject summoner = matchObject.getJSONObject("info").getJSONArray("participants").getJSONObject(0);
-        Boolean victory = (Boolean) summoner.get("win");
+        String victory = SummonerMatch.returnOutcome((boolean) summoner.get("win"));
         String assists = summoner.get("assists").toString();
         String deaths = summoner.get("deaths").toString();
         String kills = summoner.get("kills").toString();
         String kda = String.format("%s/%s/%s", kills, deaths, assists);
-
         String mode = matchObject.getJSONObject("info").get("gameMode").toString();
         String date = matchObject.getJSONObject("info").get("gameCreation").toString();
+        String championUrl = SummonerMatch.createChampionUrl(summoner.getString("championName"));
+        String item1Url = SummonerMatch.createItemUrl(summoner.getString("item0"));
+        String item2Url = SummonerMatch.createItemUrl(summoner.getString("item1"));
+        String item3Url = SummonerMatch.createItemUrl(summoner.getString("item2"));
+        String item4Url = SummonerMatch.createItemUrl(summoner.getString("item3"));
+        String item5Url = SummonerMatch.createItemUrl(summoner.getString("item4"));
+        String item6Url = SummonerMatch.createItemUrl(summoner.getString("item5"));
+        String item7Url = SummonerMatch.createItemUrl(summoner.getString("item6"));
+        String spell1Url = SummonerMatch.createSpellUrl(summoner.getString("summoner1Id"));
+        String spell2Url = SummonerMatch.createSpellUrl(summoner.getString("summoner2Id"));
+        String rune1Url = SummonerMatch.createRuneUrl(summoner.getJSONObject("perks").getString("primary"));
+        String rune2Url = SummonerMatch.createRuneUrl(summoner.getJSONObject("perks").getString("secondary"));
 
-        int duration_number = (int)matchObject.getJSONObject("info").get("gameDuration");
-        int minutes;
-        int seconds;
+        boolean hasGameEndTimeStamp = matchObject.getJSONObject("info").isNull("gameEndTimestamp");
+        String durationString = SummonerMatch.formatDuration((int)matchObject.getJSONObject("info").get("gameDuration"), hasGameEndTimeStamp);
 
-        if(matchObject.getJSONObject("info").isNull("gameEndTimestamp")) {
-            minutes = (duration_number / 1000) / 60;
-            seconds = (duration_number /1000 ) % 60;
-        } else {
-            minutes = duration_number / 60;
-            seconds = duration_number % 60;
-        }
-
-        String duration = minutes + ":" + seconds;
-
-        return new SummonerMatch("a","a","a","a","a",
-                "a","a","a","a","a", victory,kda, mode, date, duration);
+        return new SummonerMatch(championUrl,rune1Url,rune2Url,spell1Url,spell2Url,
+                item1Url,item2Url,item3Url,item4Url,item5Url, item6Url, item7Url, victory,kda, mode, date, durationString);
     }
 }

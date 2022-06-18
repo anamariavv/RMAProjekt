@@ -39,32 +39,49 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.MatchViewHol
         String rune1Url = currentMatch.getRune1Url();
         String rune2Url = currentMatch.getRune2Url();
         String spell1Url = currentMatch.getSpell1Url();
-        String spell2Url = currentMatch.getItem2Url();
+        String spell2Url = currentMatch.getSpell2Url();
         String item1Url = currentMatch.getItem1Url();
         String item2Url = currentMatch.getItem2Url();
         String item3Url = currentMatch.getItem3Url();
         String item4Url = currentMatch.getItem4Url();
         String item5Url = currentMatch.getItem5Url();
-        Boolean victory = currentMatch.getVictory();
+        String item6Url = currentMatch.getItem6Url();
+        String item7Url = currentMatch.getItem7Url();
+        String victory = currentMatch.getVictory();
         String kda = currentMatch.getKda();
         String mode = currentMatch.getMode();
         String date = currentMatch.getDate();
         String duration = currentMatch.getDuration();
 
-        //TODO set images
-
-        if(!victory) {
-            holder.outcome.setText("VICTORY");
-        } else {
-            holder.outcome.setText("DEFEAT");
-        }
+        holder.outcome.setText(victory);
         holder.kda.setText(kda);
         holder.mode.setText(mode);
         holder.date.setText(date);
         holder.duration.setText(duration);
-
-        Picasso.get().load("http://ddragon.leagueoflegends.com/cdn/12.11.1/img/champion/Ahri.png")
+        Picasso.get().load(champIconUrl)
                 .into(holder.champPicture);
+        Picasso.get().load(item1Url)
+                .into(holder.item1);
+        Picasso.get().load(item2Url)
+                .into(holder.item2);
+        Picasso.get().load(item3Url)
+                .into(holder.item3);
+        Picasso.get().load(item4Url)
+                .into(holder.item4);
+        Picasso.get().load(item5Url)
+                .into(holder.item5);
+        Picasso.get().load(item6Url)
+                .into(holder.item6);
+        Picasso.get().load(item7Url)
+                .into(holder.item7);
+        Picasso.get().load(spell1Url)
+                .into(holder.spell1);
+        Picasso.get().load(spell2Url)
+                .into(holder.spell2);
+        Picasso.get().load(rune1Url)
+                .into(holder.rune1);
+        Picasso.get().load(rune2Url)
+                .into(holder.rune2);
 
     }
 
@@ -84,6 +101,8 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.MatchViewHol
         public ImageView item3;
         public ImageView item4;
         public ImageView item5;
+        public ImageView item6;
+        public ImageView item7;
         public TextView outcome;
         public TextView kda;
         public TextView mode;
@@ -103,6 +122,8 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.MatchViewHol
             item3 = itemView.findViewById(R.id.item3);
             item4 = itemView.findViewById(R.id.item4);
             item5 = itemView.findViewById(R.id.item5);
+            item6 = itemView.findViewById(R.id.item6);
+            item7 = itemView.findViewById(R.id.item7);
             outcome = itemView.findViewById(R.id.outcome);
             kda = itemView.findViewById(R.id.kda);
             mode = itemView.findViewById(R.id.mode);

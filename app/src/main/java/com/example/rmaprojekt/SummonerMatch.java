@@ -4,6 +4,10 @@ import java.time.LocalDate;
 
 public class SummonerMatch {
     //TODO change fields
+    private static final String CHAMPION_URL_CONST = "http://ddragon.leagueoflegends.com/cdn/12.11.1/img/champion/";
+    private static final String ITEM_URL_CONST = "http://ddragon.leagueoflegends.com/cdn/12.11.1/img/item/";
+    private static final String SPELL_URL_CONST = "http://ddragon.leagueoflegends.com/cdn/12.11.1/img/spell/";
+    private static final String RUNE_URL_CONST = "http://ddragon.leagueoflegends.com/cdn/img/";
     private String champIconUrl;
     private String rune1Url;
     private String rune2Url;
@@ -14,13 +18,15 @@ public class SummonerMatch {
     private String item3Url;
     private String item4Url;
     private String item5Url;
-    private Boolean victory;
+    private String item6Url;
+    private String item7Url;
+    private String victory;
     private String kda;
     private String mode;
     private String date;
     private String duration;
 
-    public SummonerMatch(String champIconUrl, String rune1Url, String rune2Url, String spell1Url, String spell2Url, String item1Url, String item2Url, String item3Url, String item4Url, String item5Url, Boolean victory, String kda, String mode, String date, String duration) {
+    public SummonerMatch(String champIconUrl, String rune1Url, String rune2Url, String spell1Url, String spell2Url, String item1Url, String item2Url, String item3Url, String item4Url, String item5Url, String item6Url, String item7Url,String victory, String kda, String mode, String date, String duration) {
         this.champIconUrl = champIconUrl;
         this.rune1Url = rune1Url;
         this.rune2Url = rune2Url;
@@ -31,11 +37,52 @@ public class SummonerMatch {
         this.item3Url = item3Url;
         this.item4Url = item4Url;
         this.item5Url = item5Url;
+        this.item6Url = item6Url;
+        this.item7Url = item7Url;
         this.victory = victory;
         this.kda = kda;
         this.mode = mode;
         this.date = date;
         this.duration = duration;
+    }
+
+    public static String formatDuration(int duration, boolean hasGameEndTimestamp) {
+        int minutes;
+        int seconds;
+
+        if(hasGameEndTimestamp) {
+            minutes = (duration / 1000) / 60;
+            seconds = (duration /1000 ) % 60;
+        } else {
+            minutes = duration / 60;
+            seconds = duration % 60;
+        }
+
+        String durationString = minutes + ":" + seconds;
+
+        return durationString;
+    }
+
+    public static String createChampionUrl(String championName) {
+        return CHAMPION_URL_CONST + championName + ".png";
+    }
+
+    public static String createItemUrl(String itemNumber) {
+        return ITEM_URL_CONST + itemNumber + ".png";
+    }
+
+    public static String createSpellUrl(String spellName) {
+        return SPELL_URL_CONST + spellName + ".png";
+    }
+
+    public static String createRuneUrl(String runePath) {
+        return RUNE_URL_CONST + runePath;
+    }
+
+    public static String returnOutcome(boolean win) {
+        if(win) return "VICTORY";
+
+        return "DEFEAT";
     }
 
     public String getChampIconUrl() {
@@ -78,7 +125,15 @@ public class SummonerMatch {
         return item5Url;
     }
 
-    public Boolean getVictory() {
+    public String getItem6Url() {
+        return item6Url;
+    }
+
+    public String getItem7Url() {
+        return item7Url;
+    }
+
+    public String getVictory() {
         return victory;
     }
 
