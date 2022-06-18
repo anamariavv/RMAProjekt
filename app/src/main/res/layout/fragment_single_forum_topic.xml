@@ -82,18 +82,19 @@
             android:text="Publish time" />
     </LinearLayout>
 
-    <ScrollView
-        android:id="@+id/comment_section"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/linear_layout_2"
-        android:layout_alignParentBottom="true" />
+   <androidx.recyclerview.widget.RecyclerView
+       android:layout_width="match_parent"
+       android:id= "@+id/comment_section_recycler_view"
+       android:layout_height="wrap_content"
+       android:layout_below="@id/linear_layout_2"
+       android:layout_alignParentBottom="true"/>
+       android:layout_alignParentBottom="true"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_comment_action_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/comment_section"
+        android:layout_above="@id/comment_section_recycler_view"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="20dp"

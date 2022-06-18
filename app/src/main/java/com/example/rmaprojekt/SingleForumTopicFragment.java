@@ -1,28 +1,17 @@
 package com.example.rmaprojekt;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
-import android.text.TextUtils;
-import android.util.Log;
-import android.view.Gravity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.android.volley.VolleyError;
@@ -30,6 +19,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,6 +33,9 @@ public class SingleForumTopicFragment extends Fragment {
     private TextView id;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private RecyclerView commentRecyclerView;
+    private CommentAdapter commentAdapter;
+    private ArrayList<Comment> comments;
 
     private String mParam1;
     private String mParam2;
@@ -71,7 +64,13 @@ public class SingleForumTopicFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_single_forum_topic, container, false);
+        View view = inflater.inflate(R.layout.fragment_single_forum_topic, container, false);
+
+        commentRecyclerView = view.findViewById(R.id.comment_section_recycler_view);
+        commentRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        comments = new ArrayList<>();
+        commentRecyclerView.setAdapter(new CommentAdapter(getContext(), comments));
+        return view;
     }
 
     @Override
@@ -126,13 +125,6 @@ public class SingleForumTopicFragment extends Fragment {
         allComments.put("source", "display comments");
         allComments.put("forum_topic_id", id.getText().toString().trim());
 
-        ScrollView commentSection = singleTopicView.findViewById(R.id.comment_section);
-        LinearLayout scrollChild = new LinearLayout(getContext());
-        scrollChild.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        scrollChild.setOrientation(LinearLayout.VERTICAL);
-        scrollChild.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
-        scrollChild.setDividerDrawable(getResources().getDrawable(R.drawable.empty_divider));
-
         JSONObject requestBody = SingletonRequestSender.createJsonRequest(allComments);
         SingletonRequestSender.sendRequest(requestBody, getResources().getString(R.string.forum_request_url), new SingletonRequestSender.RequestResult() {
             @Override
@@ -142,89 +134,13 @@ public class SingleForumTopicFragment extends Fragment {
                     JSONArray allCommentsArray = result.getJSONArray("rows");
 
                     for(int i = 0; i < allCommentsArray.length(); i++) {
-                        JSONObject currentObject = allCommentsArray.getJSONObject(i);
-
-                        RelativeLayout commentLayout = new RelativeLayout(getContext());
-                        TextView text = new TextView(getContext());
-                        TextView id = new TextView(getContext());
-                        TextView author = new TextView(getContext());
-                        TextView published = new TextView(getContext());
-
-                        commentLayout.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-
-                        RelativeLayout.LayoutParams idParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                        id.setLayoutParams(idParams);
-                        id.setId(View.generateViewId());
-                        id.setText(currentObject.getString("id"));
-                        id.setVisibility(View.GONE);
-
-                        RelativeLayout.LayoutParams textParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                        textParams.addRule(RelativeLayout.BELOW, id.getId());
-                        text.setLayoutParams(textParams);
-                        text.setPadding(15,0,0,50);
-                        text.setMaxLines(5);
-                        text.setTextSize(15);
-                        text.setEllipsize(TextUtils.TruncateAt.END);
-                        text.setId(View.generateViewId());
-                        text.setText(currentObject.getString("text"));
-
-                        LinearLayout interactionLayout = new LinearLayout(getContext());
-                        interactionLayout.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                        interactionLayout.setOrientation(LinearLayout.HORIZONTAL);
-                        RelativeLayout.LayoutParams interactionLayoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                        interactionLayoutParams.addRule(RelativeLayout.BELOW, text.getId());
-                        interactionLayout.setLayoutParams(interactionLayoutParams);
-
-                        LinearLayout.LayoutParams buttonParams = new LinearLayout.LayoutParams(90,90);
-
-                        ImageButton likeButton = new ImageButton(getContext());
-                        likeButton.setLayoutParams(buttonParams);
-                        likeButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_like));
-                        likeButton.setId(View.generateViewId());
-
-                        TextView likeCount = new TextView(getContext());
-                        likeCount.setText(currentObject.getString("likes"));
-                        likeCount.setPadding(0,0,30,0);
-                        likeCount.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
-                        likeCount.setTextAlignment(View.TEXT_ALIGNMENT_GRAVITY);
-                        likeCount.setId(View.generateViewId());
-
-
-                        ImageButton dislikeButton = new ImageButton(getContext());
-                        dislikeButton.setLayoutParams(buttonParams);
-                        dislikeButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_dislike));
-                        dislikeButton.setId(View.generateViewId());
-
-                        TextView dislikeCount = new TextView(getContext());
-                        dislikeCount.setText(currentObject.getString("dislikes"));
-                        dislikeCount.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
-                        dislikeCount.setTextAlignment(View.TEXT_ALIGNMENT_GRAVITY);
-                        dislikeCount.setId(View.generateViewId());
-
-                        LinearLayout.LayoutParams authorParams = new LinearLayout.LayoutParams(
-                                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                        authorParams.setMargins(20,0,20,0);
-                        author.setLayoutParams(authorParams);
-                        author.setId(View.generateViewId());
-                        author.setText(currentObject.getString("author"));
-
-                        published.setId(View.generateViewId());
-                        published.setPadding(0,0,10,0);
-                        published.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
-                        published.setText(currentObject.getString("publish_date"));
-
-                        interactionLayout.addView(likeButton);
-                        interactionLayout.addView(likeCount);
-                        interactionLayout.addView(dislikeButton);
-                        interactionLayout.addView(dislikeCount);
-                        interactionLayout.addView(author);
-                        interactionLayout.addView(published);
-
-                        commentLayout.addView(id);
-                        commentLayout.addView(text);
-                        commentLayout.addView(interactionLayout);
-                        scrollChild.addView(commentLayout);
+                        JSONObject commentObject = allCommentsArray.getJSONObject(i);
+                        Comment comment = createComment(commentObject);
+                        comments.add(comment);
                     }
+
+                    commentAdapter = new CommentAdapter(getContext(), comments);
+                    commentRecyclerView.setAdapter(commentAdapter);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -237,7 +153,16 @@ public class SingleForumTopicFragment extends Fragment {
                 toast.show();
             }
         });
-        commentSection.addView(scrollChild);
+    }
+
+    private Comment createComment(JSONObject commentObject) throws JSONException {
+        String text = commentObject.getString("text");
+        String likeCount = commentObject.getString("likes");
+        String dislikeCount = commentObject.getString("dislikes");
+        String author = commentObject.getString("author");
+        String published = commentObject.getString("publish_date");
+
+        return new Comment(text, likeCount, dislikeCount, author, published);
     }
 
 }
