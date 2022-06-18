@@ -47,7 +47,7 @@
         unset($data["source"]);
 
         $result = database_select("comment", "*", array("forum_topic_id"), array_values($data), "i", true);
-        
+
         respond_array(($result));
     } else {
         respond($response);
