@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="130dp">
+
+    <ImageView
+        android:id="@+id/champ"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/ic_loading" />
+
+    <TextView
+        android:id="@+id/outcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="VICTORY" />
+
+    <TextView
+        android:id="@+id/kda"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/outcome"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="0/0/0" />
+
+    <TextView
+        android:id="@+id/mode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="40dp"
+        android:text="Normal" />
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/mode"
+        android:layout_alignStart="@id/mode"
+        android:layout_alignParentEnd="true"
+        android:text="1.6.2022." />
+
+    <TextView
+        android:id="@+id/duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/date"
+        android:layout_alignStart="@id/mode"
+        android:layout_alignParentEnd="true"
+        android:text="20 min" />
+
+    <ImageView
+        android:id="@+id/rune1"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_below="@id/champ"
+        android:src="@drawable/ic_loading" />
+
+    <ImageView
+        android:id="@+id/rune2"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_below="@id/champ"
+        android:layout_toEndOf="@id/rune1"
+        android:src="@drawable/ic_loading" />
+
+
+    <ImageView
+        android:id="@+id/item1"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_below="@id/champ"
+        android:layout_marginLeft="35dp"
+        android:layout_toEndOf="@id/rune2"
+        android:src="@drawable/ic_loading" />
+
+    <ImageView
+        android:id="@+id/item2"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_below="@id/champ"
+        android:layout_toEndOf="@id/item1"
+        android:src="@drawable/ic_loading" />
+
+    <ImageView
+        android:id="@+id/item3"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_below="@id/champ"
+        android:layout_toEndOf="@id/item2"
+        android:src="@drawable/ic_loading" />
+
+    <ImageView
+        android:id="@+id/item4"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_below="@id/champ"
+        android:layout_toEndOf="@id/item3"
+        android:src="@drawable/ic_loading" />
+
+    <ImageView
+        android:id="@+id/item5"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_below="@id/champ"
+        android:layout_toEndOf="@id/item4"
+        android:src="@drawable/ic_loading" />
+
+    <ImageView
+        android:id="@+id/item6"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_below="@id/champ"
+        android:layout_toEndOf="@id/item5"
+        android:src="@drawable/ic_loading" />
+
+    <ImageView
+        android:id="@+id/item7"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_below="@id/champ"
+        android:layout_toEndOf="@id/item6"
+        android:src="@drawable/ic_loading" />
+
+    <ImageView
+        android:id="@+id/spell1"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_below="@id/champ"
+        android:layout_marginLeft="25dp"
+        android:layout_toEndOf="@id/item7"
+        android:src="@drawable/ic_loading" />
+
+    <ImageView
+        android:id="@+id/spell2"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_below="@id/champ"
+        android:layout_toEndOf="@id/spell1"
+        android:src="@drawable/ic_loading" />
+
+
+</RelativeLayout>

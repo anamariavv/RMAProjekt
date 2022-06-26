@@ -58,10 +58,18 @@ public class LoginFragment extends Fragment implements IValidate {
         TextView registerLink = view.findViewById(R.id.registerLink);
         FragmentManager parentFragmentManager = getActivity().getSupportFragmentManager();
 
-        registerLink.setOnClickListener(view12 -> parentFragmentManager.beginTransaction().replace(R.id.fragmentFrame, new RegisterFragment())
-                .setReorderingAllowed(true)
-                .addToBackStack(null)
-                .commit());
+        registerLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (savedInstanceState == null) {
+                    parentFragmentManager.beginTransaction().replace(R.id.fragmentFrame, RegisterFragment.class, null)
+                            .setReorderingAllowed(true)
+                            .addToBackStack(null)
+                            .commit();
+                }
+            }
+        });
+
 
         Button loginButton = view.findViewById(R.id.loginButton);
         EditText usernameView = view.findViewById(R.id.loginUsername);

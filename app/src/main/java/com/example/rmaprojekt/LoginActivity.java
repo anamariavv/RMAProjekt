@@ -1,7 +1,6 @@
 package com.example.rmaprojekt;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -23,13 +22,13 @@ public class LoginActivity extends AppCompatActivity {
         String password = sharedPreferences.getString("password", null);
 
         if(username == null|| password == null) {
-            Fragment loginFragment = new LoginFragment();
-
             FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().add(new RegisterFragment(), "registerFrag").commitNow();
-            fragmentManager.beginTransaction().replace(R.id.fragmentFrame, loginFragment)
-                    .setReorderingAllowed(true)
-                    .commit();
+
+            if (savedInstanceState == null) {
+                fragmentManager.beginTransaction().add(R.id.fragmentFrame, LoginFragment.class, null)
+                        .setReorderingAllowed(true)
+                        .commit();
+            }
         } else {
             Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(mainActivity);
