@@ -82,7 +82,6 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.MatchViewHol
                 .into(holder.rune1);
         Picasso.get().load(rune2Url)
                 .into(holder.rune2);
-
     }
 
     @Override

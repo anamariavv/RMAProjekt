@@ -1,23 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".SearchFragment">
 
+    <RelativeLayout
+        android:id="@+id/summoner_search_header"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_below="@id/summoner_search">
+
+        <ImageView
+            android:id="@+id/summoner_search_icon"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="40dp" />
+
+        <TextView
+            android:id="@+id/summoner_search_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="40dp"
+            android:layout_toEndOf="@id/summoner_search_icon"
+            android:textSize="25dp" />
+
+        <TextView
+            android:id="@+id/summoner_search_level"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/summoner_search_name"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="30dp"
+            android:layout_marginBottom="40dp"
+            android:layout_toEndOf="@id/summoner_search_icon"
+            android:textSize="18dp" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/summoner_search_match_history"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/summoner_search_header"
+        android:paddingBottom="15dp"
+        android:text="MATCH HISTORY"
+        android:visibility="invisible"
+        android:textAlignment="center"
+        android:textSize="18dp" />
     <androidx.appcompat.widget.SearchView
         android:id="@+id/summoner_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:queryHint="Summoner search"
-        app:iconifiedByDefault="false"/>
+        app:iconifiedByDefault="false"
+        app:queryHint="Summoner search" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/summoner_profile_recycler"
         android:layout_width="match_parent"
-        android:layout_height="650dp"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@id/summoner_search"/>
+        android:layout_height="500dp"
+        android:layout_below="@id/summoner_search_match_history"
+        android:layout_alignParentBottom="true" />
 
 </RelativeLayout>

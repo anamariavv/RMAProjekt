@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ProfileFragment">
 
+
     <TextView
         android:id="@+id/profile_title"
         android:layout_width="match_parent"
@@ -45,15 +46,23 @@
             android:text="Username"
             android:textSize="8pt" />
 
-        <EditText
-            android:id="@+id/profile_username"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/profile_username_layout"
+            style="@style/TextInputStyle"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_below="@id/profile_icon"
+            android:layout_alignBaseline="@id/username_label"
             android:layout_marginTop="20dp"
-            android:layout_toEndOf="@id/username_label"
-            android:padding="10dp"
-            android:textSize="8pt" />
+            android:layout_toEndOf="@id/username_label">
+
+            <EditText
+                android:id="@+id/profile_username"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:padding="10dp"
+                android:textSize="8pt" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/name_label"
@@ -67,15 +76,25 @@
             android:text="Name"
             android:textSize="8pt" />
 
-        <EditText
-            android:id="@+id/profile_name"
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/profile_name_layout"
+            style="@style/TextInputStyle"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_below="@id/profile_username"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/profile_username_layout"
+            android:layout_alignBaseline="@id/name_label"
             android:layout_marginTop="20dp"
-            android:layout_toEndOf="@id/name_label"
-            android:padding="10dp"
-            android:textSize="8pt" />
+            android:layout_toEndOf="@id/name_label">
+
+            <EditText
+                android:id="@+id/profile_name"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:padding="10dp"
+                android:textSize="8pt" />
+        </com.google.android.material.textfield.TextInputLayout>
+
 
         <TextView
             android:id="@+id/lastname_label"
@@ -88,15 +107,26 @@
             android:text="Lastname"
             android:textSize="8pt" />
 
-        <EditText
-            android:id="@+id/profile_lastname"
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/profile_lastname_layout"
+            style="@style/TextInputStyle"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_below="@id/profile_name"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/profile_name_layout"
+            android:layout_alignBaseline="@id/lastname_label"
             android:layout_marginTop="20dp"
-            android:layout_toEndOf="@id/lastname_label"
-            android:padding="10dp"
-            android:textSize="8pt" />
+            android:layout_toEndOf="@id/lastname_label">
+
+            <EditText
+                android:id="@+id/profile_lastname"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:padding="10dp"
+                android:textSize="8pt" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
 
         <TextView
             android:id="@+id/email_label"
@@ -110,17 +140,24 @@
             android:text="Email"
             android:textSize="8pt" />
 
-        <EditText
-            android:id="@+id/profile_email"
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/profile_email_layout"
+            style="@style/TextInputStyle"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_below="@id/profile_lastname"
             android:layout_marginTop="20dp"
             android:layout_toEndOf="@id/email_label"
-            android:inputType="textEmailAddress"
-            android:padding="10dp"
-            android:textSize="8pt" />
-
+            android:layout_alignBaseline="@id/email_label">
+            <EditText
+                android:id="@+id/profile_email"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:inputType="textEmailAddress"
+                android:padding="10dp"
+                android:textSize="8pt" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/password_label"
@@ -149,8 +186,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:inputType="textPassword"
-                android:textColorHint="@color/red"
-                android:textSize="8pt" />
+                android:textSize="8pt"
+                android:padding="10dp"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button

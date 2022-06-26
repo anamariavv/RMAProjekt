@@ -5,16 +5,22 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.android.volley.VolleyError;
+import com.squareup.picasso.Picasso;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
@@ -62,6 +68,9 @@ public class SearchFragment extends Fragment {
         matchRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         matches = new ArrayList<>();
         matchRecyclerView.setAdapter( new MatchAdapter(getContext(), matches));
+        DividerItemDecoration itemDecorator = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
+        itemDecorator.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.empty_divider));
+
 
         return view;
     }
@@ -85,11 +94,13 @@ public class SearchFragment extends Fragment {
                 SingletonRequestSender.sendRequest(requestBody, getResources().getString(R.string.request_url), new SingletonRequestSender.RequestResult() {
                     @Override
                     public void onSuccess(JSONObject result) {
+                     //   Log.d("infois:", result.toString());
                         try {
                             if(!result.isNull("status") && result.getJSONObject("status").getString("message").equals("Data not found - summoner not found")) {
-                               Log.d("res not found", result.toString());
                                errorOrNull("Summoner doesn't exist");
                             } else {
+                                fillSummonerHeader(result);
+
                                 matches.clear();
                                 for(int i = 0; i < NUM_MATCHES; i++) {
                                     SummonerMatch newMatch = createMatch(result.getJSONObject(String.valueOf(i)));
@@ -122,6 +133,25 @@ public class SearchFragment extends Fragment {
     private void errorOrNull(String message) {
         Toast toast = Toast.makeText(getContext(), message, Toast.LENGTH_LONG);
         toast.show();
+    }
+
+    private void fillSummonerHeader(JSONObject summonerData) throws JSONException {
+        ImageView summonerIconHolder = profileFragmentView.findViewById(R.id.summoner_search_icon);
+        TextView summonerNameHolder = profileFragmentView.findViewById(R.id.summoner_search_name);
+        TextView summonerLevelHolder = profileFragmentView.findViewById(R.id.summoner_search_level);
+        TextView matchHistoryTitle = profileFragmentView.findViewById(R.id.summoner_search_match_history);
+
+        String iconUrl = "http://ddragon.leagueoflegends.com/cdn/12.12.1/img/profileicon/"
+                + summonerData.getString("profileIconId")
+                + ".png";
+        String summonerName = summonerData.getString("name");
+        String summonerLevel = summonerData.getString("summonerLevel");
+
+        Picasso.get().load(iconUrl).into(summonerIconHolder);
+        summonerNameHolder.setText(summonerName);
+        summonerLevelHolder.setText("Level: " + summonerLevel);
+
+        matchHistoryTitle.setVisibility(View.VISIBLE);
     }
 
     private SummonerMatch createMatch(JSONObject matchObject) throws JSONException {

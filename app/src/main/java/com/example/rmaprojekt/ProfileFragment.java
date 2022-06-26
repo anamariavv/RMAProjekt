@@ -108,6 +108,7 @@ public class ProfileFragment extends Fragment implements IValidate {
             @Override
             public void onSuccess(JSONObject result) {
                 try {
+
                     nameView.setText(result.getJSONObject("response").get("name").toString());
                     lastnameView.setText(result.getJSONObject("response").get("lastname").toString());
                     emailView.setText(result.getJSONObject("response").get("email").toString());
