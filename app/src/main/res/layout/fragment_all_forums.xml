@@ -15,14 +15,15 @@
         android:padding="10dp"
         android:text="@string/forum_title"
         android:textAlignment="center"
+        android:textColor="@color/primaryTextColor"
         android:textSize="28dp" />
 
     <ScrollView
         android:id="@+id/all_forums_scrollview"
         android:layout_width="match_parent"
-        android:layout_below="@id/forum_title"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"/>
+        android:layout_below="@id/forum_title"
+        android:layout_alignParentBottom="true" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/forum_topics_action_button"
@@ -33,7 +34,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
+        android:src="@drawable/ic_add_forum_topic"
         app:backgroundTint="@color/primaryLightColor"
-        app:tint="@color/secondaryColor"
-        android:src="@drawable/ic_add_forum_topic" />
+        app:tint="@color/secondaryColor" />
 </RelativeLayout>

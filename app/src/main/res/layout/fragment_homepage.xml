@@ -6,10 +6,21 @@
     android:orientation="vertical"
     tools:context=".HomepageFragment">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="EUNE TOP 200 PLAYERS"
+        android:textAlignment="center"
+        android:padding="10dp"
+        android:background="@color/primaryLightColor"
+        android:textStyle="bold"
+        android:textColor="@color/white"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="@drawable/grey_rectangle">
 
         <TextView
             android:layout_width="30dp"

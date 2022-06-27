@@ -58,7 +58,6 @@ public class ProfileFragment extends Fragment implements IValidate {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        //TODO add reset button to reset profile to default (before editing)
         super.onViewCreated(view, savedInstanceState);
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("RMA", Context.MODE_PRIVATE);
 
@@ -107,6 +106,7 @@ public class ProfileFragment extends Fragment implements IValidate {
         SingletonRequestSender.sendRequest(requestBody, getResources().getString(R.string.profile_request_url), new SingletonRequestSender.RequestResult() {
             @Override
             public void onSuccess(JSONObject result) {
+                Log.d("profile:", result.toString());
                 try {
 
                     nameView.setText(result.getJSONObject("response").get("name").toString());

@@ -28,7 +28,9 @@
             android:layout_marginLeft="30dp"
             android:layout_marginTop="40dp"
             android:layout_toEndOf="@id/summoner_search_icon"
-            android:textSize="25dp" />
+            android:textColor="@color/white"
+            android:textSize="25dp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/summoner_search_level"
@@ -40,6 +42,7 @@
             android:layout_marginLeft="30dp"
             android:layout_marginBottom="40dp"
             android:layout_toEndOf="@id/summoner_search_icon"
+            android:textColor="@color/white"
             android:textSize="18dp" />
     </RelativeLayout>
 
@@ -50,9 +53,10 @@
         android:layout_below="@id/summoner_search_header"
         android:paddingBottom="15dp"
         android:text="MATCH HISTORY"
-        android:visibility="invisible"
         android:textAlignment="center"
-        android:textSize="18dp" />
+        android:textSize="18dp"
+        android:visibility="invisible" />
+
     <androidx.appcompat.widget.SearchView
         android:id="@+id/summoner_search"
         android:layout_width="match_parent"

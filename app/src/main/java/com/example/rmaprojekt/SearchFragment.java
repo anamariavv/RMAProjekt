@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -140,6 +141,7 @@ public class SearchFragment extends Fragment {
         TextView summonerNameHolder = profileFragmentView.findViewById(R.id.summoner_search_name);
         TextView summonerLevelHolder = profileFragmentView.findViewById(R.id.summoner_search_level);
         TextView matchHistoryTitle = profileFragmentView.findViewById(R.id.summoner_search_match_history);
+        RelativeLayout header = profileFragmentView.findViewById(R.id.summoner_search_header);
 
         String iconUrl = "http://ddragon.leagueoflegends.com/cdn/12.12.1/img/profileicon/"
                 + summonerData.getString("profileIconId")
@@ -152,6 +154,7 @@ public class SearchFragment extends Fragment {
         summonerLevelHolder.setText("Level: " + summonerLevel);
 
         matchHistoryTitle.setVisibility(View.VISIBLE);
+        header.setBackgroundColor(getResources().getColor(R.color.primaryLightColor));
     }
 
     private SummonerMatch createMatch(JSONObject matchObject) throws JSONException {

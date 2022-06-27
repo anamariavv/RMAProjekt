@@ -1,17 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="red">#ec2414</color>
-    <color name="light_blue">#65c1f1</color>
-    <color name="dark_blue">#315466</color>
-    <color name="grey">#d9d9d9</color>
-    <color name="white">#FFFFFFFF</color>
-
     <color name="primaryColor">#0f084b</color>
     <color name="primaryLightColor">#402e78</color>
     <color name="primaryDarkColor">#000025</color>
@@ -20,5 +8,9 @@
     <color name="secondaryDarkColor">#cccccc</color>
     <color name="primaryTextColor">#0f084b</color>
     <color name="secondaryTextColor">#000000</color>
+    <color name="light_grey_background">#eeedf3</color>
+    <color name="white">#ffffff</color>
+    <color name="outcome_defeat">#f7d4d4</color>
+    <color name="outcome_victory">#d3f9e3</color>
 </resources>
 

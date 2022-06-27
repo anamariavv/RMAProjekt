@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -53,6 +54,8 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.MatchViewHol
         String date = currentMatch.getDate();
         String duration = currentMatch.getDuration();
 
+        setMatchBackgroundColor(holder, victory);
+
         holder.outcome.setText(victory);
         holder.kda.setText(kda);
         holder.mode.setText(mode);
@@ -84,6 +87,14 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.MatchViewHol
                 .into(holder.rune2);
     }
 
+    private void setMatchBackgroundColor( MatchViewHolder holder, String outcome) {
+        if(outcome.equals("VICTORY")) {
+            holder.matchParent.setBackgroundColor(matchContext.getResources().getColor(R.color.outcome_victory));
+        } else {
+            holder.matchParent.setBackgroundColor(matchContext.getResources().getColor(R.color.outcome_defeat));
+        }
+    }
+
     @Override
     public int getItemCount() {
         return matches.size();
@@ -107,6 +118,7 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.MatchViewHol
         public TextView mode;
         public TextView date;
         public TextView duration;
+        public RelativeLayout matchParent;
 
         public MatchViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -128,6 +140,7 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.MatchViewHol
             mode = itemView.findViewById(R.id.mode);
             date = itemView.findViewById(R.id.date);
             duration = itemView.findViewById(R.id.duration);
+            matchParent = itemView.findViewById(R.id.match_parent);
         }
     }
 

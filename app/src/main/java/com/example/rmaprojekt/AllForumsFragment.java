@@ -1,18 +1,14 @@
 package com.example.rmaprojekt;
 
-import android.icu.util.BuddhistCalendar;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +25,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -108,7 +103,7 @@ public class AllForumsFragment extends Fragment {
                         TextView published = new TextView(getContext());
 
                         forumLayout.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                        forumLayout.setBackground(getResources().getDrawable(R.drawable.rounded_edittext));
+                        forumLayout.setBackground(getResources().getDrawable(R.drawable.grey_rectangle));
                         forumLayout.setPadding(10,20,0,20);
                         forumLayout.setClickable(true);
 

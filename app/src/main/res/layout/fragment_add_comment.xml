@@ -11,35 +11,37 @@
         android:layout_height="wrap_content"
         android:text="id"
         android:textSize="10dp"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/add_comment_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="20dp"
         android:text="Add a comment"
         android:textAlignment="center"
-        android:padding="20dp"
-        android:textSize="20dp"/>
+        android:background="@drawable/grey_rectangle"
+        android:textColor="@color/primaryLightColor"
+        android:textSize="20dp" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/add_comment_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
         android:layout_below="@id/add_comment_title"
+        android:layout_centerInParent="true"
         android:layout_marginTop="80dp">
+
         <EditText
             android:id="@+id/add_comment_text"
             android:layout_width="350dp"
             android:layout_height="80dp"
-            android:background="@drawable/rounded_edittext"
             android:gravity="top"
             android:hint="Enter comment"
             android:inputType="textMultiLine"
             android:overScrollMode="always"
             android:scrollbars="vertical"
-            android:scrollHorizontally="false"/>
+            android:scrollHorizontally="false" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button

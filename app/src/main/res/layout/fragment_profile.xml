@@ -15,6 +15,7 @@
         android:padding="10dp"
         android:text="@string/profile_fragment_title"
         android:textAlignment="center"
+        android:textColor="@color/primaryColor"
         android:textSize="25dp" />
 
     <ImageView
