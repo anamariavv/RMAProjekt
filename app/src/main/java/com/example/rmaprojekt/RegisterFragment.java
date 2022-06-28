@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-public class RegisterFragment extends Fragment implements IValidate {
+public class RegisterFragment extends Fragment{
     private static final String ARG_PARAM1 = "param1";
 
     private String mParam1;
@@ -121,7 +121,6 @@ public class RegisterFragment extends Fragment implements IValidate {
         });
     }
 
-    @Override
     public boolean validateFormInfo(Map<String, String> newInformation) {
         Pattern passwordPattern = Pattern.compile("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$");
         Toast toast;

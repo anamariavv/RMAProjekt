@@ -21,7 +21,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LoginFragment extends Fragment implements IValidate {
+public class LoginFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
 
@@ -122,7 +122,6 @@ public class LoginFragment extends Fragment implements IValidate {
         });
     }
 
-    @Override
     public boolean validateFormInfo(Map<String, String> newInformation) {
         Toast toast;
         boolean empty = false;

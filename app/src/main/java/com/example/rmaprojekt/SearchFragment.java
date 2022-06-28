@@ -1,6 +1,13 @@
 package com.example.rmaprojekt;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,20 +17,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
-import android.widget.Toast;
+
 import com.android.volley.VolleyError;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -62,13 +62,13 @@ public class SearchFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_search, container, false);
+        View view = inflater.inflate(R.layout.fragment_search, container, false);
 
         matchRecyclerView = view.findViewById(R.id.summoner_profile_recycler);
         matchRecyclerView.setHasFixedSize(true);
         matchRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         matches = new ArrayList<>();
-        matchRecyclerView.setAdapter( new MatchAdapter(getContext(), matches));
+        matchRecyclerView.setAdapter(new MatchAdapter(getContext(), matches));
         DividerItemDecoration itemDecorator = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
         itemDecorator.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.empty_divider));
 
@@ -95,15 +95,14 @@ public class SearchFragment extends Fragment {
                 SingletonRequestSender.sendRequest(requestBody, getResources().getString(R.string.request_url), new SingletonRequestSender.RequestResult() {
                     @Override
                     public void onSuccess(JSONObject result) {
-                     //   Log.d("infois:", result.toString());
                         try {
-                            if(!result.isNull("status") && result.getJSONObject("status").getString("message").equals("Data not found - summoner not found")) {
-                               errorOrNull("Summoner doesn't exist");
+                            if (!result.isNull("status") && result.getJSONObject("status").getString("message").equals("Data not found - summoner not found")) {
+                                errorOrNull("Summoner doesn't exist");
                             } else {
                                 fillSummonerHeader(result);
 
                                 matches.clear();
-                                for(int i = 0; i < NUM_MATCHES; i++) {
+                                for (int i = 0; i < NUM_MATCHES; i++) {
                                     SummonerMatch newMatch = createMatch(result.getJSONObject(String.valueOf(i)));
                                     matches.add(newMatch);
                                 }
@@ -117,7 +116,7 @@ public class SearchFragment extends Fragment {
 
                     @Override
                     public void onError(VolleyError error) {
-                       errorOrNull("An error occurred");
+                        errorOrNull("An error occurred");
                     }
                 });
                 return true;
@@ -180,9 +179,9 @@ public class SearchFragment extends Fragment {
         String rune2Url = SummonerMatch.createRuneUrl(summoner.getJSONObject("perks").getString("secondary"));
 
         boolean hasGameEndTimeStamp = matchObject.getJSONObject("info").isNull("gameEndTimestamp");
-        String durationString = SummonerMatch.formatDuration((int)matchObject.getJSONObject("info").get("gameDuration"), hasGameEndTimeStamp);
+        String durationString = SummonerMatch.formatDuration((int) matchObject.getJSONObject("info").get("gameDuration"), hasGameEndTimeStamp);
 
-        return new SummonerMatch(championUrl,rune1Url,rune2Url,spell1Url,spell2Url,
-                item1Url,item2Url,item3Url,item4Url,item5Url, item6Url, item7Url, victory,kda, mode, date, durationString);
+        return new SummonerMatch(championUrl, rune1Url, rune2Url, spell1Url, spell2Url,
+                item1Url, item2Url, item3Url, item4Url, item5Url, item6Url, item7Url, victory, kda, mode, date, durationString);
     }
 }

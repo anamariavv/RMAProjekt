@@ -7,16 +7,16 @@ public class LeaderboardRank {
     private String wins;
     private String losses;
     private String lp;
-    private boolean hostreak;
+    private boolean hotstreak;
 
-    public LeaderboardRank(String number, String summoner, String rank, String wins, String losses, String lp, boolean hostreak) {
+    public LeaderboardRank(String number, String summoner, String rank, String wins, String losses, String lp, boolean hotstreak) {
         this.number = number;
         this.summoner = summoner;
         this.rank = rank;
         this.wins = wins;
         this.losses = losses;
         this.lp = lp;
-        this.hostreak = hostreak;
+        this.hotstreak = hotstreak;
     }
 
     public String getNumber() {
@@ -43,7 +43,7 @@ public class LeaderboardRank {
         return lp;
     }
 
-    public boolean isHostreak() {
-        return hostreak;
+    public boolean isHotstreak() {
+        return hotstreak;
     }
 }

@@ -42,7 +42,8 @@ public class AllForumsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public AllForumsFragment() {}
+    public AllForumsFragment() {
+    }
 
     public static AllForumsFragment newInstance(String param1, String param2) {
         AllForumsFragment fragment = new AllForumsFragment();
@@ -71,7 +72,6 @@ public class AllForumsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         final float TITLE_TEXT_SIZE = 22;
-        final float TEXT_SIZE = 17;
 
         super.onViewCreated(view, savedInstanceState);
 
@@ -92,19 +92,19 @@ public class AllForumsFragment extends Fragment {
 
                 try {
                     JSONArray allForums = result.getJSONArray("rows");
-                    for(int i = 0; i < allForums.length(); i++) {
+                    for (int i = 0; i < allForums.length(); i++) {
                         JSONObject currentObject = allForums.getJSONObject(i);
 
                         RelativeLayout forumLayout = new RelativeLayout(getContext());
                         TextView title = new TextView(getContext());
                         TextView text = new TextView(getContext());
-                        TextView author= new TextView(getContext());
+                        TextView author = new TextView(getContext());
                         TextView id = new TextView(getContext());
                         TextView published = new TextView(getContext());
 
                         forumLayout.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                         forumLayout.setBackground(getResources().getDrawable(R.drawable.grey_rectangle));
-                        forumLayout.setPadding(10,20,0,20);
+                        forumLayout.setPadding(10, 20, 0, 20);
                         forumLayout.setClickable(true);
 
                         viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
@@ -133,7 +133,7 @@ public class AllForumsFragment extends Fragment {
                         titleParams.addRule(RelativeLayout.BELOW, id.getId());
                         title.setLayoutParams(titleParams);
                         title.setId(View.generateViewId());
-                        title.setTextSize(TITLE_TEXT_SIZE);
+                        title.setTextSize(20);
                         title.setText(currentObject.getString("title"));
 
                         RelativeLayout.LayoutParams publishedParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -143,60 +143,57 @@ public class AllForumsFragment extends Fragment {
                         publishedParams.addRule(RelativeLayout.ALIGN_PARENT_END, RelativeLayout.TRUE);
                         published.setLayoutParams(publishedParams);
                         published.setId(View.generateViewId());
-                        published.setPadding(0,0,10,0);
+                        published.setPadding(0, 0, 10, 0);
                         published.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
                         published.setText(currentObject.getString("publish_date"));
 
-                        RelativeLayout.LayoutParams authorParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                        authorParams.addRule(RelativeLayout.BELOW, title.getId());
-                        author.setPadding(0,0,0,15);
-                        author.setLayoutParams(authorParams);
-                        author.setId(View.generateViewId());
-                        author.setText(currentObject.getString("author"));
-
                         RelativeLayout.LayoutParams textParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                        textParams.addRule(RelativeLayout.BELOW, author.getId());
+                        textParams.addRule(RelativeLayout.BELOW, title.getId());
                         text.setLayoutParams(textParams);
-                        text.setPadding(0,0,0,50);
+                        text.setPadding(0, 15, 0, 50);
                         text.setMaxLines(5);
-                        text.setTextSize(TEXT_SIZE);
                         text.setEllipsize(TextUtils.TruncateAt.END);
                         text.setId(View.generateViewId());
                         text.setText(currentObject.getString("text"));
 
                         LinearLayout interactionLayout = new LinearLayout(getContext());
-                        interactionLayout.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                         interactionLayout.setOrientation(LinearLayout.HORIZONTAL);
-                        RelativeLayout.LayoutParams interactionLayoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        RelativeLayout.LayoutParams interactionLayoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                         interactionLayoutParams.addRule(RelativeLayout.BELOW, text.getId());
                         interactionLayout.setLayoutParams(interactionLayoutParams);
 
                         ImageView likeView = new ImageView(getContext());
                         likeView.setImageResource(R.drawable.ic_like);
-                        likeView.setPadding(10,0,5,0);
+                        likeView.setPadding(10, 0, 5, 0);
                         likeView.setId(View.generateViewId());
 
                         TextView likeCount = new TextView(getContext());
                         likeCount.setText(currentObject.getString("likes"));
-                        likeCount.setPadding(0,0,30,0);
+                        likeCount.setPadding(0, 0, 30, 0);
                         likeCount.setId(View.generateViewId());
 
                         ImageView dislikeView = new ImageView(getContext());
                         dislikeView.setImageResource(R.drawable.ic_dislike);
-                        dislikeView.setPadding(10,0,5,0);
+                        dislikeView.setPadding(10, 0, 5, 0);
                         dislikeView.setId(View.generateViewId());
 
                         TextView dislikeCount = new TextView(getContext());
                         dislikeCount.setText(currentObject.getString("dislikes"));
                         dislikeCount.setId(View.generateViewId());
 
+                        author.setTextSize(11);
+                        author.setWidth(700);
+                        author.setId(View.generateViewId());
+                        author.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
+                        author.setText(currentObject.getString("author"));
+
                         interactionLayout.addView(likeView);
                         interactionLayout.addView(likeCount);
                         interactionLayout.addView(dislikeView);
                         interactionLayout.addView(dislikeCount);
+                        interactionLayout.addView(author);
 
                         forumLayout.addView(title);
-                        forumLayout.addView(author);
                         forumLayout.addView(id);
                         forumLayout.addView(published);
                         forumLayout.addView(text);

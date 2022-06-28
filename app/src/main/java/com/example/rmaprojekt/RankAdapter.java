@@ -40,7 +40,7 @@ public class RankAdapter extends RecyclerView.Adapter<RankAdapter.RankViewHolder
         String wins = currentRank.getWins();
         String losses = currentRank.getLosses();
         String lp = currentRank.getLp();
-        boolean hotstreak = currentRank.isHostreak();
+        boolean hotstreak = currentRank.isHotstreak();
 
         holder.leaderboardNumber.setText(number);
         holder.leaderboardSummoner.setText(summoner);

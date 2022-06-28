@@ -3,14 +3,10 @@ package com.example.rmaprojekt;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +14,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.VolleyError;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,7 +27,8 @@ public class AddCommentFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public AddCommentFragment() {}
+    public AddCommentFragment() {
+    }
 
     public static AddCommentFragment newInstance(String param1, String param2) {
         AddCommentFragment fragment = new AddCommentFragment();
@@ -85,7 +79,7 @@ public class AddCommentFragment extends Fragment {
             public void onClick(View view) {
                 String commentTextString = commentText.getText().toString().trim();
 
-                if(!commentTextString.isEmpty()) {
+                if (!commentTextString.isEmpty()) {
                     Map<String, String> commentInfo = new HashMap<String, String>();
                     commentInfo.put("forum_topic_id", idView.getText().toString().trim());
                     commentInfo.put("source", "new comment");

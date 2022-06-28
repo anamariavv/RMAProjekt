@@ -1,9 +1,6 @@
 package com.example.rmaprojekt;
 
-import java.time.LocalDate;
-
 public class SummonerMatch {
-    //TODO change fields
     private static final String CHAMPION_URL_CONST = "http://ddragon.leagueoflegends.com/cdn/12.11.1/img/champion/";
     private static final String ITEM_URL_CONST = "http://ddragon.leagueoflegends.com/cdn/12.11.1/img/item/";
     private static final String SPELL_URL_CONST = "http://ddragon.leagueoflegends.com/cdn/12.11.1/img/spell/";
@@ -26,7 +23,7 @@ public class SummonerMatch {
     private String date;
     private String duration;
 
-    public SummonerMatch(String champIconUrl, String rune1Url, String rune2Url, String spell1Url, String spell2Url, String item1Url, String item2Url, String item3Url, String item4Url, String item5Url, String item6Url, String item7Url,String victory, String kda, String mode, String date, String duration) {
+    public SummonerMatch(String champIconUrl, String rune1Url, String rune2Url, String spell1Url, String spell2Url, String item1Url, String item2Url, String item3Url, String item4Url, String item5Url, String item6Url, String item7Url, String victory, String kda, String mode, String date, String duration) {
         this.champIconUrl = champIconUrl;
         this.rune1Url = rune1Url;
         this.rune2Url = rune2Url;
@@ -50,17 +47,15 @@ public class SummonerMatch {
         int minutes;
         int seconds;
 
-        if(hasGameEndTimestamp) {
+        if (hasGameEndTimestamp) {
             minutes = (duration / 1000) / 60;
-            seconds = (duration /1000 ) % 60;
+            seconds = (duration / 1000) % 60;
         } else {
             minutes = duration / 60;
             seconds = duration % 60;
         }
 
-        String durationString = minutes + ":" + seconds;
-
-        return durationString;
+        return minutes + ":" + seconds;
     }
 
     public static String createChampionUrl(String championName) {
@@ -80,7 +75,7 @@ public class SummonerMatch {
     }
 
     public static String returnOutcome(boolean win) {
-        if(win) return "VICTORY";
+        if (win) return "VICTORY";
 
         return "DEFEAT";
     }

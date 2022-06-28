@@ -3,23 +3,26 @@ package com.example.rmaprojekt;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.volley.VolleyError;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -135,7 +138,7 @@ public class SingleForumTopicFragment extends Fragment {
                 try {
                     JSONArray allCommentsArray = result.getJSONArray("rows");
 
-                    for(int i = 0; i < allCommentsArray.length(); i++) {
+                    for (int i = 0; i < allCommentsArray.length(); i++) {
                         JSONObject commentObject = allCommentsArray.getJSONObject(i);
                         Comment comment = createComment(commentObject);
                         comments.add(comment);

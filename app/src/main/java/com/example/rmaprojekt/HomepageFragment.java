@@ -1,6 +1,5 @@
 package com.example.rmaprojekt;
 
-import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -10,15 +9,18 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
 import com.android.volley.VolleyError;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -36,7 +38,8 @@ public class HomepageFragment extends Fragment {
     private RankAdapter rankAdapter;
     private ArrayList<LeaderboardRank> rankings;
 
-    public HomepageFragment() {}
+    public HomepageFragment() {
+    }
 
     public static HomepageFragment newInstance(String param1, String param2) {
         HomepageFragment fragment = new HomepageFragment();
@@ -52,7 +55,7 @@ public class HomepageFragment extends Fragment {
         @Override
         public int compare(JSONObject summoner1, JSONObject summoner2) {
             try {
-                if(summoner1.getInt("leaguePoints") > summoner2.getInt("leaguePoints")) {
+                if (summoner1.getInt("leaguePoints") > summoner2.getInt("leaguePoints")) {
                     return 1;
                 } else if (summoner1.getInt("leaguePoints") < summoner2.getInt("leaguePoints")) {
                     return -1;
@@ -95,7 +98,7 @@ public class HomepageFragment extends Fragment {
         JSONObject challengerRequest = SingletonRequestSender.createJsonRequest(params);
 
         SingletonRequestSender.sendRequest(challengerRequest, getResources().getString(R.string.request_url)
-                ,new SingletonRequestSender.RequestResult() {
+                , new SingletonRequestSender.RequestResult() {
                     @RequiresApi(api = Build.VERSION_CODES.N)
                     @Override
                     public void onSuccess(JSONObject result) {
@@ -104,15 +107,15 @@ public class HomepageFragment extends Fragment {
 
                         try {
                             entries = result.getJSONArray("entries");
-                            for(int i = 0; i < entries.length(); i++) {
+                            for (int i = 0; i < entries.length(); i++) {
                                 summonerObjects.add(entries.getJSONObject(i));
                             }
                             Collections.sort(summonerObjects, new summonerComparator().reversed());
 
                             int position = 1;
-                            for(JSONObject summonerObject : summonerObjects) {
-                               LeaderboardRank rank = createRank(summonerObject, position);
-                               rankings.add(rank);
+                            for (JSONObject summonerObject : summonerObjects) {
+                                LeaderboardRank rank = createRank(summonerObject, position);
+                                rankings.add(rank);
 
                                 position++;
                             }
@@ -124,6 +127,7 @@ public class HomepageFragment extends Fragment {
                             e.printStackTrace();
                         }
                     }
+
                     @Override
                     public void onError(VolleyError error) {
                         Toast toast = Toast.makeText(getContext(), "An error occurred", Toast.LENGTH_LONG);
@@ -137,7 +141,7 @@ public class HomepageFragment extends Fragment {
         String summoner = summonerObject.getString("summonerName");
         String rank = summonerObject.getString("rank");
         String wins = summonerObject.getString("wins");
-        String losses =summonerObject.getString("losses");
+        String losses = summonerObject.getString("losses");
         String lp = summonerObject.getString("leaguePoints");
         boolean hotstreak = (boolean) summonerObject.get("hotStreak");
 

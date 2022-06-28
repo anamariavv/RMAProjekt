@@ -3,28 +3,21 @@ package com.example.rmaprojekt;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.android.volley.VolleyError;
-
 import org.json.JSONObject;
-
 import java.util.HashMap;
 import java.util.Map;
 
-public class NewForumTopicFragment extends Fragment implements IValidate {
+public class NewForumTopicFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -101,7 +94,6 @@ public class NewForumTopicFragment extends Fragment implements IValidate {
         });
     }
 
-    @Override
     public boolean validateFormInfo(Map<String, String> newInformation) {
         Toast toast;
         boolean empty = false;
